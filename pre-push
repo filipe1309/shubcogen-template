@@ -1,0 +1,104 @@
+#!/bin/bash
+
+# DOTR
+
+.shub/bin/shub-logo.sh
+
+VERSION=$(head -n 1 .shub/bin/version)
+
+# Auto incremeent Tag Version (with semantic versioning) on pre-push
+
+echo "[pre-push hook] Setting new version ..."
+
+major=`echo $VERSION | cut -d. -f1`
+minor=`echo $VERSION | cut -d. -f2`
+revision=`echo $VERSION | cut -d. -f3`
+
+echo "---------------------------------------------"
+echo "Current version: $VERSION"
+echo "---------------------------------------------"
+echo ""
+
+echo 'Which type of update:'
+
+# Allows us to read user input below, assigns stdin to keyboard
+exec < /dev/tty
+
+select type in major minor revision
+do
+        case $type in 
+        major|minor|revision)   
+                break
+                ;;
+        *)
+                echo "Invalid area" 
+                ;;
+        esac
+done
+
+if [ $type == "major" ]; then
+    major=`expr $major + 1`
+    minor=0
+    revision=0
+elif [ $type == "minor" ]; then
+    minor=`expr $minor + 1`
+    revision=0
+elif  [ $type == "revision" ]; then
+    revision=`expr $revision + 1`
+else
+    echo "No version"
+    exit 1
+fi
+
+echo "---------------------------------------------"
+
+echo "$type"
+NEW_VERSION="$major.$minor.$revision"
+echo $NEW_VERSION
+
+echo "---------------------------------------------"
+
+confirm() {
+    read -r -p "${1:-Are you sure? [Y/n]} " response
+    response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
+    if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
+        echo "Ok"
+    else
+        exit 0;
+    fi
+}
+
+read -r -p "Update version ($type) from $VERSION to $NEW_VERSION? [Y/n]" response
+response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
+if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
+    echo "Updating..."
+    sed -i '' -e "s/$VERSION/$NEW_VERSION/g" .shub/bin/version
+    git add .shub/bin/version
+    git commit -m "chore: version updated"
+    
+    echo -e "\xE2\x9C\x94 Done"
+fi
+
+# Update Tag Version (with semantic versioning) on pre-push
+
+echo "[pre-push hook] Setting new version tag ..."
+
+NEWEST_TAG=$(git describe --abbrev=0 --tags)
+
+echo $NEWEST_TAG
+echo $NEW_VERSION
+echo "version $NEW_VERSION"
+
+if [ x$NEWEST_TAG != x$NEW_VERSION ]; then
+    echo "Last tag ($NEWEST_TAG) differs from last version ($NEW_VERSION)"
+    echo "Generating a new tag ($NEW_VERSION)..."
+
+    NEW_VERSION_DESCRIPTION_DEFAULT="Version $NEW_VERSION"
+    printf 'Version description [%s]: ' "$NEW_VERSION_DESCRIPTION_DEFAULT"
+    read -r NEW_VERSION_DESCRIPTION
+    if [ -z "$NEW_VERSION_DESCRIPTION"  -a "$NEW_VERSION_DESCRIPTION" != " " ]; then
+        NEW_VERSION_DESCRIPTION=$NEW_VERSION_DESCRIPTION_DEFAULT
+    fi
+
+    git tag -a $NEW_VERSION -m "$NEW_VERSION_DESCRIPTION" && echo "New tag ($NEW_VERSION) created"
+fi
