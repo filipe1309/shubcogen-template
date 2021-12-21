@@ -179,7 +179,7 @@ $JSON_CONFIG
 EOF
     fi
 
-    read -r -p "Keep shub scripts (deploy, init, self-update...) [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
+    read -r -p "Keep shub scripts (deploy, init...) [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
     response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
     if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
         echo "OK =)"
