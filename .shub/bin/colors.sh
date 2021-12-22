@@ -11,8 +11,8 @@
 # Cyan         0;36     Light Cyan    1;36
 # Light Gray   0;37     White         1;37
 
-BG_GREEN='\e[1;32m'
-NO_BG='\e[m'
+BG_GREEN='\033[1;32m'
+NO_BG='\033[m'
 DARK_GRAY='\033[1;30m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
