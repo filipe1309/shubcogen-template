@@ -8,10 +8,6 @@ exec 0< /dev/tty
 source .shub/bin/colors.sh   
 source .shub/bin/helpers.sh
 
-# JSON_CONFIG="$(cat shub-config.json)"
-# GIT_USERNAME=$(parse_json "$JSON_CONFIG" username)
-# echo $GIT_USERNAME
-
 echo "---------------------------------------------"
 
 read -r -p "Config template [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
@@ -140,8 +136,6 @@ JSON_TEMPLATE='{
     echo ""
     echo "---------------------------------------------"
 
-    #echo $JSON_CONFIG | grep -Eo '"[^"]*" *(: *([0-9]*|"[^"]*")[^{}\["]*|,)?|[^"\]\[\}\{]*|\{|\},?|\[|\],?|[0-9 ]*,?' | awk '{if ($0 ~ /^[}\]]/ ) offset-=4; printf "%*c%s\n", offset, " ", $0; if ($0 ~ /^[{\[]/) offset+=4}'
-
     JSONF=$(format_json "$JSON_CONFIG")
     echo "$JSONF"
     
@@ -186,8 +180,9 @@ EOF
             fi
         fi
     else
+        # Remove shub scripts
         rm -rf .shub
-        rm shub-deploy.sh
+        rm deploy.sh
     fi
 
     echo "---------------------------------------------"
@@ -196,6 +191,7 @@ EOF
     echo ""
     echo "---------------------------------------------"
 
+    # Always remove init script
     rm init.sh
 else
     exit 0;
