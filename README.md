@@ -85,9 +85,9 @@ Please make sure to update tests as appropriate. -->
 ---
 
 <p align="center">
-    Done with ♥ by <a style="font-weight: bold" href="https://www.linkedin.com/in/{{ GITHUB_USER }}/">{{ GIT_USERNAME }}</a> 🖖
+    Done with :heart:&nbsp;&nbsp;by <a style="font-weight: bold" href="https://www.linkedin.com/in/{{ GITHUB_USER }}/">{{ GIT_USERNAME }}</a> 🖖
 </p>
 
 ---
 
-> @ Generated with [ShubcoGen™](https://github.com/filipe1309/shubcogen) {{ VERSION }}
+> @ Generated with [ShubcoGen Template™](https://github.com/filipe1309/shubcogen-template) {{ VERSION }}
