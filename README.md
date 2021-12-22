@@ -1,3 +1,4 @@
+# <!-- SHUBCONFIG --> Run `init.sh` to configure your project.
 # <p align="center">{{ PROJECT_NAME }}</p>
 
 <p align="center">
