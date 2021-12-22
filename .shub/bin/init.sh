@@ -5,7 +5,12 @@
 exec 0< /dev/tty
 
 .shub/bin/shub-logo.sh
-source .shub/bin/colors.sh        
+source .shub/bin/colors.sh   
+source .shub/bin/helpers.sh
+
+# JSON_CONFIG="$(cat shub-config.json)"
+# GIT_USERNAME=$(parse_json "$JSON_CONFIG" username)
+# echo $GIT_USERNAME
 
 echo "---------------------------------------------"
 
@@ -110,25 +115,6 @@ JSON_TEMPLATE='{
         read -r -p "Use $(echo -e $BG_GREEN"shub-config.json"$NO_BG) configs [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
         response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
         if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
-            function parse_json()
-            {
-                echo $1 | \
-                sed -e 's/[{}]/''/g' | \
-                sed -e 's/", "/'\",\"'/g' | \
-                sed -e 's/" ,"/'\",\"'/g' | \
-                sed -e 's/" , "/'\",\"'/g' | \
-                sed -e 's/","/'\"---SEPERATOR---\"'/g' | \
-                awk -F=':' -v RS='---SEPERATOR---' "\$1~/\"$2\"/ {print}" | \
-                sed -e "s/\"$2\"://" | \
-                tr -d "\n\t" | \
-                sed -e 's/\\"/"/g' | \
-                sed -e 's/\\\\/\\/g' | \
-                sed -e 's/^[ \t]*//g' | \
-                sed -e 's/^"//'  -e 's/"$//' | \
-                sed -e 's/"//' | \
-                sed -e 's/ $//'
-            }
-
             # Read json file content
             JSON_CONFIG="$(cat shub-config.json)"
 
@@ -154,8 +140,11 @@ JSON_TEMPLATE='{
     echo ""
     echo "---------------------------------------------"
 
-    echo $JSON_CONFIG
+    #echo $JSON_CONFIG | grep -Eo '"[^"]*" *(: *([0-9]*|"[^"]*")[^{}\["]*|,)?|[^"\]\[\}\{]*|\{|\},?|\[|\],?|[0-9 ]*,?' | awk '{if ($0 ~ /^[}\]]/ ) offset-=4; printf "%*c%s\n", offset, " ", $0; if ($0 ~ /^[{\[]/) offset+=4}'
 
+    JSONF=$(format_json "$JSON_CONFIG")
+    echo "$JSONF"
+    
     echo "---------------------------------------------"
     echo ""
 

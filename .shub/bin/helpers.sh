@@ -20,6 +20,12 @@ function parse_json() {
     sed -e 's/ $//'
 }
 
+format_json() {
+    echo $1 | \
+    grep -Eo '"[^"]*" *(: *([0-9]*|"[^"]*")[^{}\["]*|,)?|[^"\]\[\}\{]*|\{|\},?|\[|\],?|[0-9 ]*,?' | \
+    awk '{if ($0 ~ /^[}\]]/ ) offset-=4; printf "%*c%s\n", offset, " ", $0; if ($0 ~ /^[{\[]/) offset+=4}'
+}
+
 function confirm() {
     read -r -p "${1:-Are you sure? [Y/n]} " response
     response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
