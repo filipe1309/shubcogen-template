@@ -23,6 +23,8 @@ echo "               DOTR DEPLOY $VERSION                   "
 echo -e "#############################################${NO_BG}"
 echo "---------------------------------------------"
 
+.shub/bin/self-update.sh && exit 0
+
 TAG_MSG=$2
 GIT_BRANCH=$(git branch --show-current)
 GIT_DEFAULT_BRANCH=$(git remote show origin | grep 'HEAD' | cut -d':' -f2 | sed -e 's/^ *//g' -e 's/ *$//g')

@@ -26,4 +26,4 @@ Show help.
 ## Roadmap
 - [ ] Improve `README.md`
 - [ ] Add video tutorial to `deploy.sh` && `init.sh`
-- [ ] Add self-update feature
+- [x] Add self-update feature
