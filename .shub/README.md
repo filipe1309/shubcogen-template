@@ -2,9 +2,9 @@
 
 ## 💬 About
 
-Skeleton GitHub Course Generator.
+**S**keleton Git**Hub** **Co**urse **Gen**erator.
 
-This project aims to be a template with some scripts for course projects deployed on GitHub.
+This project is a `template` with some scripts to `automate` `deploy` and the `initial setup` of a new **Co**urse that will be hosted on **Git**Hub.
 
 ## 📜 Requirements
 - [Git](https://git-scm.com/)
@@ -30,6 +30,9 @@ After running this script, you'll be prompted to enter your project's informatio
 ## 🚀 Let's deploy
 
 Use `./deploy.sh` to deploy your project on GitHub.
+> 💡 This script is optional.
+
+### ❓ What will happen?
 
 This script auto-increments the version number of the branch and creates a new tag from branch name.
 
@@ -43,9 +46,7 @@ For example, if your actual branch is `class-1`, after running this script, the 
 4. A new branch `class-2` will be created
 5. `notes.md` will be update with the new "project version number" like `## CLASS-2`
 
-> 💡 This script is optional.
 
-### ❓ What will happen?
 
 
 ### Optional arguments
@@ -57,9 +58,9 @@ For example, if your actual branch is `class-1`, after running this script, the 
   -h: Help
 ```
 
-#### -a Accept all suggestions, and deploy project.
-#### -m Set tag message.
-#### -h Show help.
+#### `-a` Accept all suggestions, and deploy project.
+#### `-m` Set tag message.
+#### `-h` Show help.
 
 
 ## Features
