@@ -6,6 +6,10 @@
 source .shub/bin/helpers.sh
 source .shub/bin/colors.sh
 
+readArguments $*
+
+# TODO: Add auto-update
+
 # Read json file content
 JSON_CONFIG="$(cat shub-config.json)"
 COURSE_TYPE=$(parse_json "$JSON_CONFIG" course_type)
@@ -17,7 +21,6 @@ echo -e "${BG_GREEN}"
 echo "#############################################"
 echo "               DOTR DEPLOY $VERSION                   "
 echo -e "#############################################${NO_BG}"
-echo "# [Optional] param: --tag-msg \"TAG_MESSAGE_HERE\""
 echo "---------------------------------------------"
 
 TAG_MSG=$2
@@ -47,23 +50,40 @@ echo "Next branch: $GIT_BRANCH_NEXT_CLASS_LW"
 
 echo "---------------------------------------------"
 
+#################
+#### TAGGING ####
+#################
+
 generateTag() {
     if [[ $NEWEST_TAG != *$GIT_BRANCH* ]]; then
         if [ $# -eq 0 ]; then
-            read -r -p "Do you want to $(echo -e $BG_GREEN"tag"$NO_BG) [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
-            response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
+            if [ -z "$all" ]; then
+                read -r -p "Do you want to generate a $(echo -e $BG_GREEN"tag"$NO_BG) [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
+                response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
+            else
+                response="y"
+            fi
             if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
                 echo "# TAG MESSAGE"
                 echo "# Example: \"$(git tag -n9 | head -n 1 | awk '{for(i=2;i<=NF;++i)printf $i FS}')\""
                 tagMsgPrefixSuggestion="$(tr '[:lower:]' '[:upper:]' <<< ${TAG_NAME:0:1})${TAG_NAME:1}"
-                echo "Type the tag message prefix [$tagMsgPrefixSuggestion - ]:"
-                read -e tagMsgPrefix
+                if [ -z "$all" ]; then
+                    echo "Type the tag message prefix [$tagMsgPrefixSuggestion - ]:"
+                    read -e tagMsgPrefix
+                fi
                 if [ -z "$tagMsgPrefix"  -a "$tagMsgPrefix" != " " ]; then
                     tagMsgPrefix=$tagMsgPrefixSuggestion
                 fi
 
-                echo "Type the tag message:"
-                read -e tagmsg
+                if [ -z "$all" ] && [ -z "$message" ]; then
+                    echo "Type the tag message:"
+                    read -e tagmsg
+                else
+                    tagmsg="Auto generated tag message"
+                fi
+                if [ ! -z "$message"  -a "$message" != " " ]; then
+                    tagmsg="$message"
+                fi
                 if [ ! -z "$tagmsg"  -a "$tagmsg" != " " ]; then
                     TAG_MSG_SLUG=$(echo "$tagmsg" | iconv -t ascii//TRANSLIT | sed -r 's/[~\^]+//g' | sed -r 's/[^a-zA-Z0-9]+/-/g' | sed -r 's/^-+\|-+$//g' | tr A-Z a-z)
                     TAG_NAME="${TAG_NAME}-${TAG_MSG_SLUG}"
@@ -77,16 +97,20 @@ generateTag() {
                 echo "Tag:    [name]= \"$TAG_NAME\" || [msg]= \"$TAG_MSG\""
                 echo "---------------------------------------------"
 
-                read -r -p "Are you sure [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
-                response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
-
+                if [ -z "$all" ]; then
+                    read -r -p "Are you sure [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
+                    response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
+                else
+                    response="y"
+                fi
                 if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
                     git tag -a $TAG_NAME -m "$TAG_MSG"
+                    echo -e "${BG_GREEN}Tag created: $TAG_NAME${NO_BG}"
+                    echo "---------------------------------------------"
                 else
                     echo "Bye =)"
                     exit 0
                 fi
-                echo "---------------------------------------------"
             fi
         else
             # Verify if param --tag-msg is set && message param is not empty
@@ -102,7 +126,7 @@ generateTag() {
 
 
 #################
-### BRANCH
+#### BRANCH #####
 #################
 
 echo ""
@@ -118,17 +142,23 @@ fi
 
 echo "---------------------------------------------"
 echo ""
-confirm "Checkout to \"$(echo -e $BG_GREEN"$GIT_DEFAULT_BRANCH"$NO_BG)\" branch & Merge current branch ($GIT_BRANCH) [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " && { git checkout $GIT_DEFAULT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } } && { git merge $GIT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } }
+if [ -z "$all" ]; then
+    confirm "Checkout to \"$(echo -e $BG_GREEN"$GIT_DEFAULT_BRANCH"$NO_BG)\" branch & Merge current branch ($GIT_BRANCH) [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? "
+fi
+{ git checkout $GIT_DEFAULT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } } && { git merge $GIT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } }
 echo ""
 echo "---------------------------------------------"
 echo ""
 generateTag
-echo ""
-echo "---------------------------------------------"
-echo ""
-echo "---------------------------------------------"
-echo ""
-confirm "Deploy on \"$(echo -e $BG_GREEN"$GIT_DEFAULT_BRANCH"$NO_BG)\" branch [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " && { git push origin $GIT_DEFAULT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } } && { git push origin $GIT_DEFAULT_BRANCH --tags  || { echo -e "$FAILED_MSG" ; exit 1; } }
+if [ -z "$all" ]; then
+    echo ""
+    echo "---------------------------------------------"
+    echo ""
+    echo "---------------------------------------------"
+    echo ""
+    confirm "Deploy on \"$(echo -e $BG_GREEN"$GIT_DEFAULT_BRANCH"$NO_BG)\" branch [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? "
+fi
+{ git push origin $GIT_DEFAULT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } } && { git push origin $GIT_DEFAULT_BRANCH --tags  || { echo -e "$FAILED_MSG" ; exit 1; } }
 echo ""
 echo "---------------------------------------------"
 
@@ -138,7 +168,10 @@ echo -e "${NO_BG}"
 echo ""
 echo "---------------------------------------------"
 echo ""
-confirm "Go to next \"$(echo -e $BG_GREEN"$COURSE_TYPE"$NO_BG)\" ($GIT_BRANCH_NEXT_CLASS_LW) [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " && git checkout -b $GIT_BRANCH_NEXT_CLASS_LW
+if [ -z "$all" ]; then
+    confirm "Go to next \"$(echo -e $BG_GREEN"$COURSE_TYPE"$NO_BG)\" ($GIT_BRANCH_NEXT_CLASS_LW) [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " 
+fi
+git checkout -b $GIT_BRANCH_NEXT_CLASS_LW
 echo ""
 GIT_BRANCH_NEXT_CLASS=$(echo "$GIT_BRANCH_NEXT_CLASS" | tr '[:lower:]' '[:upper:]')  # toupper
 echo "## $GIT_BRANCH_NEXT_CLASS" >> notes.md

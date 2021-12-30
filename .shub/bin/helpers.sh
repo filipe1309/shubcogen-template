@@ -35,3 +35,32 @@ function confirm() {
         exit 0;
     fi
 }
+
+
+readArguments() {
+    echo "👉 use -h to show help"
+    echo ""
+    while getopts "a,h,m:" opt; do
+        case $opt in
+            a) all="y"
+            ;;
+            m) message=$(echo "$*" | sed -e 's/-a//' -e 's/-m//' -e 's/-h//'| sed -e 's/^[[:space:]]*//')
+            ;;
+            h) echo "Usage: $0 [-a] [-m message] [-h]"
+                echo "  -a: Accept all"
+                echo "  -m: Tag message"
+                echo "  -h: Help"
+                exit 0
+            ;;
+            \?) echo "Invalid option -$OPTARG" >&2
+            exit 1
+            ;;
+        esac
+
+        case $OPTARG in
+            -a) echo "Option $opt needs a valid argument"
+            exit 1
+            ;;
+        esac
+    done
+}
