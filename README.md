@@ -90,4 +90,5 @@ Please make sure to update tests as appropriate. -->
 
 ---
 
-> @ Generated with [ShubcoGen Template™](https://github.com/filipe1309/shubcogen-template) {{ VERSION }}
+> @ Generated with [ShubcoGen Template™](https://github.com/filipe1309/shubcogen-template) {{ VERSION }}  
+> ❓ [Docs](./.shubco/README.md)
