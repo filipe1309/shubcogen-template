@@ -76,3 +76,4 @@ For example, if your actual branch is `class-1`, after running this script, the 
 - [ ] Add video tutorial to `deploy.sh` && `init.sh`
 - [ ] Add technologies selection
 - [ ] Add requirements selection
+- [ ] Update version with GitHub API instead of version file
