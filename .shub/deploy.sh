@@ -2,9 +2,9 @@
 
 # DevOntheRun Deploy Script
 
-.shub/bin/shub-logo.sh
-source .shub/bin/helpers.sh
-source .shub/bin/colors.sh
+.shub/shub-logo.sh
+source .shub/helpers.sh
+source .shub/colors.sh
 
 readArguments $*
 
@@ -14,7 +14,7 @@ readArguments $*
 JSON_CONFIG="$(cat shub-config.json)"
 COURSE_TYPE=$(parse_json "$JSON_CONFIG" course_type)
 
-VERSION=$(head -n 1 .shub/bin/version)
+VERSION=$(head -n 1 .shub/version)
 
 
 echo -e "${BG_GREEN}"
@@ -23,7 +23,7 @@ echo "               DOTR DEPLOY $VERSION                   "
 echo -e "#############################################${NO_BG}"
 echo "---------------------------------------------"
 
-.shub/bin/self-update.sh && exit 0
+.shub/self-update.sh && exit 0
 
 TAG_MSG=$2
 GIT_BRANCH=$(git branch --show-current)

@@ -4,9 +4,9 @@
 
 exec 0< /dev/tty
 
-.shub/bin/shub-logo.sh
-source .shub/bin/colors.sh   
-source .shub/bin/helpers.sh
+.shub/shub-logo.sh
+source .shub/colors.sh   
+source .shub/helpers.sh
 
 echo "---------------------------------------------"
 
@@ -20,7 +20,7 @@ if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
     echo "                   INIT                   "
     echo "#############################################"
 
-    VERSION=$(head -n 1 .shub/bin/version)
+    VERSION=$(head -n 1 .shub/version)
 
     readValues() {
         if git rev-parse --git-dir > /dev/null 2>&1; then

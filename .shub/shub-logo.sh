@@ -2,7 +2,7 @@
 
 clear
 
-source .shub/bin/colors.sh
+source .shub/colors.sh
 
 echo -e "${BG_GREEN}"
 echo -e "
