@@ -156,6 +156,13 @@ JSON_TEMPLATE='{
         sed -i '' -e "s/{{ GIT_USERNAME }}/$GIT_USERNAME/g" README.md
         sed -i '' -e "s/{{ VERSION }}/$VERSION/g" README.md
 
+# Create version file
+curl -o .shub/latest-release.json --create-dirs https://api.github.com/repos/filipe1309/shubcogen-template/releases/latest
+LATEST_RELEASE="$(cat .shub/latest-release.json)"
+REMOTE_VERSION=$(parse_json "$LATEST_RELEASE" tag_name)
+rm .shub/latest-release.json
+echo "$REMOTE_VERSION" > .shub/version
+
 # Save JSON config file
 cat <<EOF > shub-config.json
 $JSON_CONFIG
