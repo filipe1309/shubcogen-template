@@ -8,14 +8,7 @@ source .shub/colors.sh
 
 readArguments $*
 
-# TODO: Add auto-update
-
-# Read json file content
-JSON_CONFIG="$(cat shub-config.json)"
-COURSE_TYPE=$(parse_json "$JSON_CONFIG" course_type)
-
 VERSION=$(head -n 1 .shub/version)
-
 
 echo -e "${BG_GREEN}"
 echo "#############################################"
@@ -25,24 +18,28 @@ echo "---------------------------------------------"
 
 .shub/self-update.sh && exit 0
 
-TAG_MSG=$2
+# Init variables
+JSON_CONFIG="$(cat shub-config.json)"
+COURSE_TYPE=$(parse_json "$JSON_CONFIG" course_type)
+## Git variables
 GIT_BRANCH=$(git branch --show-current)
 GIT_DEFAULT_BRANCH=$(git remote show origin | grep 'HEAD' | cut -d':' -f2 | sed -e 's/^ *//g' -e 's/ *$//g')
 [ $GIT_DEFAULT_BRANCH = "(unknown)" ] && GIT_DEFAULT_BRANCH="main"
+## Tag variables
+TAG_MSG=$2
 TAG_NAME=$GIT_BRANCH
-FAILED_MSG="\u274c ERROR =/"
 NEWEST_TAG=$(git describe --abbrev=0 --tags)
-
+FAILED_MSG="\u274c ERROR =/"
+## Course variables
 IFS='-' read -ra ADDR <<< "$GIT_BRANCH"
 CLASS_TYPE="${ADDR[0]}-"
-
 if [[ ${ADDR[1]} == *"."* ]]; then
     IFS='.' read -ra ADDR <<< "${ADDR[1]}"
     CLASS_NUMBER="$CLASS_NUMBER ${ADDR[1]}"
     CLASS_TYPE="${CLASS_TYPE}${ADDR[0]}."
 fi
 CLASS_NUMBER=${ADDR[1]}
-
+## Git variables based on course variables
 GIT_BRANCH_NEXT_CLASS=$CLASS_TYPE$(($CLASS_NUMBER + 1))
 GIT_BRANCH_NEXT_CLASS_LW=$(echo "$GIT_BRANCH_NEXT_CLASS" | tr '[:upper:]' '[:lower:]')  # tolower
 GIT_BRANCH_NEXT_CLASS_UP=$(echo "$GIT_BRANCH_NEXT_CLASS" | tr '[:lower:]' '[:upper:]')  # toupper
@@ -66,6 +63,7 @@ generateTag() {
                 response="y"
             fi
             if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
+                echo -e "🏷  ${BG_GREEN}Generating tag...${NO_BG}"
                 echo "# TAG MESSAGE"
                 echo "# Example: \"$(git tag -n9 | head -n 1 | awk '{for(i=2;i<=NF;++i)printf $i FS}')\""
                 tagMsgPrefixSuggestion="$(tr '[:lower:]' '[:upper:]' <<< ${TAG_NAME:0:1})${TAG_NAME:1}"
@@ -160,12 +158,15 @@ if [ -z "$all" ]; then
     echo ""
     confirm "Deploy on \"$(echo -e $BG_GREEN"$GIT_DEFAULT_BRANCH"$NO_BG)\" branch [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? "
 fi
+
+echo "🚀 Deploying on \"$(echo -e $BG_GREEN"$GIT_DEFAULT_BRANCH"$NO_BG)\" branch"
+
 { git push origin $GIT_DEFAULT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } } && { git push origin $GIT_DEFAULT_BRANCH --tags  || { echo -e "$FAILED_MSG" ; exit 1; } }
 echo ""
 echo "---------------------------------------------"
 
 echo -e "${BG_GREEN}"
-echo -e "\xE2\x9C\x94 DEPLOY COMPLETED"
+echo -e "\xE2\x9C\x94 DEPLOY COMPLETED 🏁"
 echo -e "${NO_BG}"
 echo ""
 echo "---------------------------------------------"
@@ -178,4 +179,3 @@ echo ""
 GIT_BRANCH_NEXT_CLASS=$(echo "$GIT_BRANCH_NEXT_CLASS" | tr '[:lower:]' '[:upper:]')  # toupper
 echo "## $GIT_BRANCH_NEXT_CLASS" >> notes.md
 echo "" >> notes.md
-
