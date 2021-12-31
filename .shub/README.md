@@ -4,7 +4,7 @@
 
 **S**keleton Git**Hub** **Co**urse **Gen**erator.
 
-This project is a `template` with some scripts to `automate` `deploy` and the `initial setup` of a new **Co**urse that will be hosted on **Git**Hub.
+This is a `template` with some scripts to `automate` `deploy` and the `initial setup` of a new **Co**urse that will be hosted on **Git**Hub.
 
 ## 📜 Requirements
 - [Git](https://git-scm.com/)
@@ -14,6 +14,11 @@ This project is a `template` with some scripts to `automate` `deploy` and the `i
 ## 🕹 Usage
 
 ## ☝️ First things first (once)
+
+```sh
+./init.sh
+```
+
 Use `./init.sh` to initialize your project.
 This script will fill the `README.md` file with your project's information. And will create the `.shub-config` file.
 
@@ -28,6 +33,11 @@ After running this script, you'll be prompted to enter your project's informatio
 > 💡 You can user the `.shub-config` file in other projects to share your project's information.
 
 ## 🚀 Let's deploy
+
+
+```sh
+./deploy.sh
+```
 
 Use `./deploy.sh` to deploy your project on GitHub.
 > 💡 This script is optional.
@@ -49,7 +59,7 @@ For example, if your actual branch is `class-1`, after running this script, the 
 
 
 
-### Optional arguments
+### 🤷‍♂️ Optional arguments
 
 ```sh
 ./deploy.sh [-a] [-m message] [-h]
@@ -58,9 +68,9 @@ For example, if your actual branch is `class-1`, after running this script, the 
   -h: Help
 ```
 
-#### `-a` Accept all suggestions, and deploy project.
-#### `-m` Set tag message.
-#### `-h` Show help.
+`-a` Accept all suggestions, and deploy project.  
+`-m` Set tag message.  
+`-h` Show help.  
 
 
 ## Features
@@ -68,13 +78,15 @@ For example, if your actual branch is `class-1`, after running this script, the 
 - [x] `notes.md` template
 - [x] Deploy script (`deploy.sh`)
 - [x] Deploy script arguments (`[-a] [-m message] [-h]`)
-- [x] Self-update
+- [x] Self-update (based on latest release)
 - [x] Auto tagging
 
 
 ## 📌 Roadmap
 - [ ] Improve `README.md`
 - [ ] Add video tutorial to `deploy.sh` && `init.sh`
-- [ ] Add technologies selection
-- [ ] Add requirements selection
-- [ ] Update version with GitHub API instead of version file
+- [ ] Add technologies selection in `init.sh`
+- [ ] Add requirements selection in `init.sh`
+- [ ] Add badges generation
+- [ ] Save deploy state (if an error occurs)
+- [ ] Add tests (with [Bat](https://github.com/bats-core/bats-core))
