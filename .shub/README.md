@@ -1,5 +1,7 @@
 # <p align="center">ShubCoGen Template™ 💀</p>
 
+<!-- TODO: Add image --->
+
 ## 💬 About
 
 **S**keleton Git**Hub** **Co**urse **Gen**erator.
@@ -18,9 +20,28 @@ This is a `template` with some scripts to `automate` `deploy` and the `initial s
 ```sh
 ./init.sh
 ```
+<!-- TODO: Add example image --->
 
 Use `./init.sh` to initialize your project.
 This script will fill the `README.md` file with your project's information. And will create the `.shub-config` file.
+
+`.shub-config` example:
+```json
+{
+    "version": "0.0.4",
+    "username": "John Doe",
+    "github_username": "john-doe",
+    "project_name": "clean arch api",
+    "project_repo_name": "clean-arch-api",
+    "project_repo_link": "https://github.com/john-doe/clean-arch-api.git",
+    "course_source": "Uncle Bob",
+    "course_name": "Clean Architecture",
+    "course_link": "http://cleancodecourse.com/",
+    "course_type": "class",
+    "course_multiple": "false",
+    "vcs": "false"
+}
+```
 
 ### ❓ What will happen?
 
@@ -38,6 +59,8 @@ After running this script, you'll be prompted to enter your project's informatio
 ```sh
 ./deploy.sh
 ```
+
+<!-- TODO: Add example image --->
 
 Use `./deploy.sh` to deploy your project on GitHub.
 > 💡 This script is optional.
