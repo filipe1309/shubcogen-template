@@ -45,7 +45,39 @@ GIT_BRANCH_NEXT_CLASS_LW=$(echo "$GIT_BRANCH_NEXT_CLASS" | tr '[:upper:]' '[:low
 GIT_BRANCH_NEXT_CLASS_UP=$(echo "$GIT_BRANCH_NEXT_CLASS" | tr '[:lower:]' '[:upper:]')  # toupper
 
 echo "Branch to deploy: $GIT_BRANCH"
+
+# Check if branch is master/main
+MAIN_BRANCHES=("master" "main")
+if array_contains MAIN_BRANCHES "$GIT_BRANCH"; then
+    echo  -e "${YELLOW}⚠️  You are commiting to the $GIT_BRANCH branch, and this deploy script is not designed to deploy to the $GIT_BRANCH branch.${NO_BG}"
+    confirm "$(echo -e $YELLOW"Are you sure you want to continue?"$NO_BG) [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? "
+    
+    # TODO: Replace with state file
+    # Detect if there is a tag with interation number, and if so, ask user if they want to deploy using that tag info
+    arrIN=(${NEWEST_TAG//-/ })
+    CLASS_TYPE_DETECTED=${arrIN[0]}
+    NUM=${arrIN[1]}
+    if [[ $NUM =~ ^[0-9]+$ ]]; then
+        echo ""
+        echo -e "${YELLOW}⚠️  Interation number \"$NUM\" detected!"
+        echo -e "An interation of \"$CLASS_TYPE_DETECTED\" was detected from last tag${NO_BG}."
+        read -r -p "Do you want to use it to set your branch as \"$(echo -e $BG_GREEN"$CLASS_TYPE_DETECTED-$NUM"$NO_BG)\" [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
+        response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
+        if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
+            GIT_BRANCH="$CLASS_TYPE_DETECTED-$NUM"
+            #git checkout -b $GIT_BRANCH
+            echo -e "${BG_GREEN}✅  Branch set to \"$GIT_BRANCH\"${NO_BG}"
+            GIT_BRANCH_NEXT_CLASS=$CLASS_TYPE_DETECTED-$(($NUM + 1))
+            TAG_NAME=$GIT_BRANCH
+            GIT_BRANCH_NEXT_CLASS_LW=$(echo "$GIT_BRANCH_NEXT_CLASS" | tr '[:upper:]' '[:lower:]')  # tolower
+            GIT_BRANCH_NEXT_CLASS_UP=$(echo "$GIT_BRANCH_NEXT_CLASS" | tr '[:lower:]' '[:upper:]')  # toupper
+        fi
+    fi
+fi
+
 echo "Next branch: $GIT_BRANCH_NEXT_CLASS_LW"
+
+exit 0
 
 echo "---------------------------------------------"
 
@@ -57,7 +89,7 @@ generateTag() {
     if [[ $NEWEST_TAG != *$GIT_BRANCH* ]]; then
         if [ $# -eq 0 ]; then
             if [ -z "$all" ]; then
-                read -r -p "Do you want to generate a $(echo -e $BG_GREEN"tag"$NO_BG) [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
+                read -r -p "Do you want to generate a $(echo -e $BG_GREEN"tag"$NO_BG) based on branch \"$(echo -e $BG_GREEN"tag"$NO_BG)\" [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
                 response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
             else
                 response="y"
@@ -150,17 +182,11 @@ echo ""
 echo "---------------------------------------------"
 echo ""
 generateTag
+echo ""
 if [ -z "$all" ]; then
-    echo ""
-    echo "---------------------------------------------"
-    echo ""
-    echo "---------------------------------------------"
-    echo ""
     confirm "Deploy on \"$(echo -e $BG_GREEN"$GIT_DEFAULT_BRANCH"$NO_BG)\" branch [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? "
 fi
-
 echo "🚀 Deploying on \"$(echo -e $BG_GREEN"$GIT_DEFAULT_BRANCH"$NO_BG)\" branch"
-
 { git push origin $GIT_DEFAULT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } } && { git push origin $GIT_DEFAULT_BRANCH --tags  || { echo -e "$FAILED_MSG" ; exit 1; } }
 echo ""
 echo "---------------------------------------------"

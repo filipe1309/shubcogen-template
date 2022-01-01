@@ -113,3 +113,4 @@ For example, if your actual branch is `class-1`, after running this script, the 
 - [ ] Add badges generation
 - [ ] Save deploy state (if an error occurs)
 - [ ] Add tests (with [Bat](https://github.com/bats-core/bats-core))
+- [ ] Add state file (to save deploy state)

@@ -14,5 +14,6 @@
 BG_GREEN='\033[1;32m'
 NO_BG='\033[m'
 DARK_GRAY='\033[1;30m'
+YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color

@@ -2,6 +2,8 @@
 
 # DevOntheRun Helpers Script
 
+source .shub/colors.sh
+
 function parse_json() {
     echo $1 | \
     sed -e 's/[{}]/''/g' | \
@@ -30,7 +32,7 @@ function confirm() {
     read -r -p "${1:-Are you sure? [Y/n]} " response
     response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
     if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
-        echo "Ok"
+        echo -e "${BG_GREEN}Ok =)${NO_BG}"
     else
         exit 0;
     fi
@@ -63,4 +65,17 @@ readArguments() {
             ;;
         esac
     done
+}
+
+array_contains () { 
+    local array="$1[@]"
+    local seeking=$2
+    local in=1
+    for element in "${!array}"; do
+        if [[ $element == "$seeking" ]]; then
+            in=0
+            break
+        fi
+    done
+    return $in
 }
