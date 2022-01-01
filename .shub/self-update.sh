@@ -12,10 +12,11 @@ REMOTE_VERSION=$(parse_json "$LATEST_RELEASE" tag_name)
 rm .shub/latest-release.json
 
 if [ "$REMOTE_VERSION" != "$LOCAL_VERSION" ]; then
-        read -r -p "There is a new version of ShubCoGen script ($REMOTE_VERSION), do you want to update it? [Y/n] " response
+        echo -e "${YELLOW}⚠️  Your local version ${BG_GREEN}\"$LOCAL_VERSION\" ${YELLOW}is outdated. The latest version is ${BG_GREEN}\"$REMOTE_VERSION\"${YELLOW}.${NO_BG}"
+        read -r -p "Do you want to update it? [$(echo -e $BG_GREEN"Y"$NO_BG)/n] " response
         response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
         if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
-            echo "Updating..."
+            echo "🔁 Updating..."
             curl -o .shub/links.txt --create-dirs https://raw.githubusercontent.com/filipe1309/shubcogen-template/main/.shub/links.txt
             cat .shub/links.txt | while read CMD; do curl -o $(echo ".shub/$(basename $CMD) --create-dirs $CMD"); done;
             chmod -R +x .shub/*.sh
@@ -27,6 +28,9 @@ if [ "$REMOTE_VERSION" != "$LOCAL_VERSION" ]; then
                 echo "✔ Auto commiting shub files ..."
                 git add .shub && git commit -m "chore: update shub files"  
             fi
+            echo ""
+            echo -e "✅ Successfully updated to version \"${BG_GREEN}$REMOTE_VERSION${NO_BG}\"."
+            echo ""
             
             exit 0
         fi

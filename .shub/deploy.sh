@@ -87,7 +87,7 @@ generateTag() {
     if [[ $NEWEST_TAG != *$GIT_BRANCH* ]]; then
         if [ $# -eq 0 ]; then
             if [ -z "$all" ]; then
-                read -r -p "Do you want to generate a $(echo -e $BG_GREEN"tag"$NO_BG) based on branch \"$(echo -e $BG_GREEN"tag"$NO_BG)\" [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
+                read -r -p "Do you want to generate a $(echo -e $BG_GREEN"tag"$NO_BG) based on branch \"$(echo -e $BG_GREEN"$GIT_BRANCH"$NO_BG)\" [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
                 response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
             else
                 response="y"
