@@ -65,7 +65,7 @@ if array_contains MAIN_BRANCHES "$GIT_BRANCH"; then
         response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
         if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
             GIT_BRANCH="$CLASS_TYPE_DETECTED-$NUM"
-            #git checkout -b $GIT_BRANCH
+            git checkout -b $GIT_BRANCH
             echo -e "${BG_GREEN}✅  Branch set to \"$GIT_BRANCH\"${NO_BG}"
             GIT_BRANCH_NEXT_CLASS=$CLASS_TYPE_DETECTED-$(($NUM + 1))
             TAG_NAME=$GIT_BRANCH
@@ -76,8 +76,6 @@ if array_contains MAIN_BRANCHES "$GIT_BRANCH"; then
 fi
 
 echo "Next branch: $GIT_BRANCH_NEXT_CLASS_LW"
-
-exit 0
 
 echo "---------------------------------------------"
 
