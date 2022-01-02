@@ -2,9 +2,7 @@
 
 # DevOntheRun Helpers Script
 
-source .shub/colors.sh
-
-function parse_json() {
+parse_json() {
     echo $1 | \
     sed -e 's/[{}]/''/g' | \
     sed -e 's/", "/'\",\"'/g' | \
@@ -28,25 +26,28 @@ format_json() {
     awk '{if ($0 ~ /^[}\]]/ ) offset-=4; printf "%*c%s\n", offset, " ", $0; if ($0 ~ /^[{\[]/) offset+=4}'
 }
 
-function confirm() {
-    read -r -p "${1:-Are you sure? [Y/n]} " response
+confirm() {
+    read -r -p "${1:-Are you sure? [$(echo -e $GREEN"Y"$NC)/n]} " response
     response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
     if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
-        echo -e "${BG_GREEN}Ok =)${NO_BG}"
+        echo -e "${GREEN}Ok =)${NC}"
     else
+        if [ -f ".shub/.shub-state.ini" ]; then
+            flush_state
+        fi
         exit 0;
     fi
 }
 
 
-readArguments() {
+read_arguments() {
     echo "👉 use -h to show help"
     echo ""
     while getopts "a,h,m:" opt; do
         case $opt in
-            a) all="y"
+            a) ALL="y"
             ;;
-            m) message=$(echo "$*" | sed -e 's/-a//' -e 's/-m//' -e 's/-h//'| sed -e 's/^[[:space:]]*//')
+            m) MESSAGE=$(echo "$*" | sed -e 's/-a//' -e 's/-m//' -e 's/-h//'| sed -e 's/^[[:space:]]*//')
             ;;
             h) echo "Usage: $0 [-a] [-m message] [-h]"
                 echo "  -a: Accept all"
@@ -78,4 +79,17 @@ array_contains () {
         fi
     done
     return $in
+}
+
+save_state_var() {
+    echo "$1=\"$2\"" >> .shub/.shub-state-variables.ini
+}
+
+commit_state() {
+    echo "STATE=\"$1\"" > .shub/.shub-state.ini
+}
+
+flush_state() {
+    rm .shub/.shub-state.ini
+    rm .shub/.shub-state-variables.ini
 }
