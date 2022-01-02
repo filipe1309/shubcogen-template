@@ -16,7 +16,7 @@ This is a `template` with some scripts to `automate` `deploy` and the `initial s
 
 ## 🕹 Usage
 
-## ☝️ First things first (once)
+### ☝️ First things first (once)
 
 ```sh
 ./init.sh
@@ -44,7 +44,7 @@ This script will fill the `README.md` file with your project's information. And 
 }
 ```
 
-### ❓ What will happen?
+#### ❓ What will happen?
 
 After running this script, you'll be prompted to enter your project's information and some configs. Don't worry, you can always change this later at `shub-config.json`.
 
@@ -54,7 +54,7 @@ After running this script, you'll be prompted to enter your project's informatio
 > 💡 You can edit the `.shub-config` file to change the project's information.  
 > 💡 You can user the `.shub-config` file in other projects to share your project's information.
 
-## 🚀 Let's deploy
+### 🚀 Let's deploy
 
 
 ```sh
@@ -66,7 +66,7 @@ After running this script, you'll be prompted to enter your project's informatio
 Use `./deploy.sh` to deploy your project on GitHub.
 > 💡 This script is optional.
 
-### ❓ What will happen?
+#### ❓ What will happen?
 
 This script auto-increments the version number of the branch and creates a new tag from branch name.
 
@@ -80,7 +80,7 @@ For example, if your actual branch is `class-1`, after running this script, the 
 4. A new branch `class-2` will be created
 5. `notes.md` will be update with the new "project version number" like `## CLASS-2`
 
-### 🤷‍♂️ Optional arguments
+#### 🤷‍♂️ Optional arguments
 
 ```sh
 ./deploy.sh [-a] [-m message] [-h]
