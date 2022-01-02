@@ -81,7 +81,7 @@ Please make sure to update tests as appropriate. -->
 ## About Me
 
 <p align="center">
-    <a style="font-weight: bold" href="https://www.linkedin.com/in/{{ GITHUB_USER }}/">
+    <a style="font-weight: bold" href="https://github.com/{{ GITHUB_USER }}/">
     <img style="border-radius:50%" width="100px; "src="https://github.com/{{ GITHUB_USER }}.png"/>
     </a>
 </p>
@@ -89,7 +89,7 @@ Please make sure to update tests as appropriate. -->
 ---
 
 <p align="center">
-    Done with :heart:&nbsp;&nbsp;by <a style="font-weight: bold" href="https://www.linkedin.com/in/{{ GITHUB_USER }}/">{{ GIT_USERNAME }}</a> 🖖
+    Done with&nbsp;&nbsp;:heart:&nbsp;&nbsp;by <a style="font-weight: bold" href="https://github.com/{{ GITHUB_USER }}/">{{ GIT_USERNAME }}</a> 🖖
 </p>
 
 ---
