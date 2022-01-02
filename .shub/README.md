@@ -93,7 +93,7 @@ For example, if your actual branch is `class-1`, after running this script, the 
 `-m` Set tag message.  
 `-h` Show help.  
 
-## Features
+## 🆕 Features
 - [x] `Readme.md` template
 - [x] `notes.md` template
 - [x] Deploy script (`deploy.sh`)
