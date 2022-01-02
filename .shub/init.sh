@@ -10,7 +10,7 @@ source .shub/helpers.sh
 
 echo "---------------------------------------------"
 
-read -r -p "Config template [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
+read -r -p "Config template [$(echo -e $GREEN"Y"$NC)/n]? " response
 response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
 if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
     
@@ -64,7 +64,7 @@ if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
         PROJECT_DEFAULT_NAME=${PROJECT_REPO_NAME//-/ } # Replace all '-' with ' '
         PROJECT_DEFAULT_NAME=( $PROJECT_DEFAULT_NAME ) # without quotes
         PROJECT_DEFAULT_NAME="${PROJECT_DEFAULT_NAME[@]^}" # cap first letter
-        printf "Project name [$BG_GREEN%s$NO_BG]: " "$PROJECT_DEFAULT_NAME"
+        printf "Project name [$GREEN%s$NC]: " "$PROJECT_DEFAULT_NAME"
         read -r PROJECT_NAME
         [ -z "$PROJECT_NAME" ] && PROJECT_NAME="$PROJECT_DEFAULT_NAME"
 
@@ -77,12 +77,12 @@ if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
         printf 'Course link []: '
         read -r COURSE_LINK
 
-        printf "Course type (e.g. class, episode, article) [$BG_GREEN%s$NO_BG]: " "class"
+        printf "Course type (e.g. class, episode, article) [$GREEN%s$NC]: " "class"
         read -r COURSE_TYPE
         [ -z "$COURSE_TYPE" ] && COURSE_TYPE="class"
 
         COURSE_MULTIPLE='true'
-        read -r -p "This course will be $(echo -e $BG_GREEN"unique"$NO_BG) [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
+        read -r -p "This course will be $(echo -e $GREEN"unique"$NC) [$(echo -e $GREEN"Y"$NC)/n]? " response
         [[ $response =~ ^(yes|y|YES|Y| ) ]] || [[ -z $response ]] && COURSE_MULTIPLE='false'
 
         SHUB_VERSION='true'
@@ -108,7 +108,7 @@ JSON_TEMPLATE='{
 
     if [ -f "shub-config.json" ]; then
         echo "shub-config.json detected"
-        read -r -p "Use $(echo -e $BG_GREEN"shub-config.json"$NO_BG) configs [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
+        read -r -p "Use $(echo -e $GREEN"shub-config.json"$NC) configs [$(echo -e $GREEN"Y"$NC)/n]? " response
         response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
         if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
             # Read json file content
@@ -142,7 +142,7 @@ JSON_TEMPLATE='{
     echo "---------------------------------------------"
     echo ""
 
-    read -r -p "Accept configs [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
+    read -r -p "Accept configs [$(echo -e $GREEN"Y"$NC)/n]? " response
     response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
     if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
         # Update template
@@ -169,7 +169,7 @@ $JSON_CONFIG
 EOF
     fi
 
-    read -r -p "Keep shub scripts (deploy, init...) [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
+    read -r -p "Keep shub scripts (deploy, init...) [$(echo -e $GREEN"Y"$NC)/n]? " response
     response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
     if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
         echo "OK =)"
@@ -177,7 +177,7 @@ EOF
         # Auto init first new branch based on course type
         if git rev-parse --git-dir > /dev/null 2>&1; then
             [[ $COURSE_MULTIPLE = 'true' ]] && FIRST_BRANCH_NAME="${COURSE_TYPE}-1.1" || FIRST_BRANCH_NAME="${COURSE_TYPE}-1"
-            read -r -p "Checkout to new branch ($FIRST_BRANCH_NAME) [$(echo -e $BG_GREEN"Y"$NO_BG)/n]? " response
+            read -r -p "Checkout to new branch ($FIRST_BRANCH_NAME) [$(echo -e $GREEN"Y"$NC)/n]? " response
             response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
             if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
                 git checkout -b $FIRST_BRANCH_NAME

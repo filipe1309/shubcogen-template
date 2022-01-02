@@ -4,7 +4,7 @@ clear
 
 source .shub/colors.sh
 
-echo -e "${BG_GREEN}"
+echo -e "${GREEN}"
 echo -e "
    ____ __         __             _____             
   / __// /  __ __ / /  ____ ___  / ___/___  ___     
@@ -12,4 +12,4 @@ echo -e "
 /___//_//_/\_,_//_.__/\__/ \___/\___/ \__//_//_/    
 By DOTR
 
-${NO_BG}"
+${NC}"
