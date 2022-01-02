@@ -10,19 +10,20 @@ source .shub/helpers.sh
 
 echo "---------------------------------------------"
 
-read -r -p "Config template [$(echo -e $GREEN"Y"$NC)/n]? " response
+read -r -p "Configure template [$(echo -e $GREEN"Y"$NC)/n]? " response
 response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
 if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
     
     clear
 
+    echo -e "${GREEN}"
     echo "#############################################"
-    echo "                   INIT                   "
-    echo "#############################################"
+    echo "               ▶ DOTR INIT SCRIPT        "
+    echo -e "#############################################${NC}"
 
     VERSION=$(head -n 1 .shub/version)
 
-    readValues() {
+    read_values() {
         if git rev-parse --git-dir > /dev/null 2>&1; then
             PROJECT_REPO_LINK=$(git config --get remote.origin.url)
             PROJECT_REPO_NAME=$(basename `git rev-parse --show-toplevel`)
@@ -57,7 +58,7 @@ if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
 
         echo ""
         echo "---------------------------------------------"
-        echo "Type some infos about the course below"
+        echo "Type some infos about the course below: "
         echo "---------------------------------------------"
         echo ""
 
@@ -86,7 +87,7 @@ if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
         [[ $response =~ ^(yes|y|YES|Y| ) ]] || [[ -z $response ]] && COURSE_MULTIPLE='false'
 
         SHUB_VERSION='true'
-        read -r -p "Remove ShubcoGen from app version control? [Y/n] " response
+        read -r -p "Remove ShubcoGen from app version control? [$(echo -e $GREEN"Y"$NC)/n] " response
         [[ $response =~ ^(yes|y|YES|Y| ) ]] || [[ -z $response ]] && SHUB_VERSION='false' && echo ".shub" >> .gitignore
 
 JSON_TEMPLATE='{
@@ -127,10 +128,10 @@ JSON_TEMPLATE='{
             COURSE_MULTIPLE=$(parse_json "$JSON_CONFIG" course_multiple)
             VCS=$(parse_json "$JSON_CONFIG" vcs)
         else
-            readValues
+            read_values
         fi
     else 
-        readValues
+        read_values
     fi
 
     echo ""
@@ -172,12 +173,12 @@ EOF
     read -r -p "Keep shub scripts (deploy, init...) [$(echo -e $GREEN"Y"$NC)/n]? " response
     response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
     if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
-        echo "OK =)"
+        echo -e "${GREEN}OK =)${NC}"
 
         # Auto init first new branch based on course type
         if git rev-parse --git-dir > /dev/null 2>&1; then
             [[ $COURSE_MULTIPLE = 'true' ]] && FIRST_BRANCH_NAME="${COURSE_TYPE}-1.1" || FIRST_BRANCH_NAME="${COURSE_TYPE}-1"
-            read -r -p "Checkout to new branch ($FIRST_BRANCH_NAME) [$(echo -e $GREEN"Y"$NC)/n]? " response
+            read -r -p "Checkout to new branch ($(echo -e $GREEN"$FIRST_BRANCH_NAME"$NC)) [$(echo -e $GREEN"Y"$NC)/n]? " response
             response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
             if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
                 git checkout -b $FIRST_BRANCH_NAME
@@ -194,7 +195,7 @@ EOF
 
     echo "---------------------------------------------"
     echo ""
-    echo -e "\xE2\x9C\x94 CONFIGURATION COMPLETED"
+    echo -e "✔ CONFIGURATION COMPLETED"
     echo ""
     echo "---------------------------------------------"
 
