@@ -12,6 +12,7 @@ This is a `template` with some scripts to `automate` `deploy` and the `initial s
 - [Git](https://git-scm.com/)
 - [Curl](https://curl.haxx.se/)
 - [Bash](https://www.gnu.org/software/bash/)
+- [iconv](https://ss64.com/bash/iconv.html)
 
 ## 🕹 Usage
 
@@ -28,7 +29,7 @@ This script will fill the `README.md` file with your project's information. And 
 `.shub-config` example:
 ```json
 {
-    "version": "0.0.4",
+    "version": "v0.0.4",
     "username": "John Doe",
     "github_username": "john-doe",
     "project_name": "clean arch api",
@@ -79,9 +80,6 @@ For example, if your actual branch is `class-1`, after running this script, the 
 4. A new branch `class-2` will be created
 5. `notes.md` will be update with the new "project version number" like `## CLASS-2`
 
-
-
-
 ### 🤷‍♂️ Optional arguments
 
 ```sh
@@ -95,7 +93,6 @@ For example, if your actual branch is `class-1`, after running this script, the 
 `-m` Set tag message.  
 `-h` Show help.  
 
-
 ## Features
 - [x] `Readme.md` template
 - [x] `notes.md` template
@@ -103,7 +100,7 @@ For example, if your actual branch is `class-1`, after running this script, the 
 - [x] Deploy script arguments (`[-a] [-m message] [-h]`)
 - [x] Self-update (based on latest release)
 - [x] Auto tagging
-
+- [x] State file (to save deploy state)
 
 ## 📌 Roadmap
 - [ ] Improve `README.md`
@@ -113,4 +110,12 @@ For example, if your actual branch is `class-1`, after running this script, the 
 - [ ] Add badges generation
 - [ ] Save deploy state (if an error occurs)
 - [ ] Add tests (with [Bat](https://github.com/bats-core/bats-core))
-- [ ] Add state file (to save deploy state)
+- [ ] Add a Dev mode
+- [ ] Fix `confirm` exit behaviour
+
+## 🔗 Useful links
+- https://gitignore.io
+- https://github.com/github/gitignore
+- https://shields.io/
+- https://simpleicons.org/
+- https://github.com/simple-icons/simple-icons/blob/develop/slugs.md
