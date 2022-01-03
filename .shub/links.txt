@@ -4,4 +4,5 @@ https://raw.githubusercontent.com/filipe1309/shubcogen-template/main/.shub/init.
 https://raw.githubusercontent.com/filipe1309/shubcogen-template/main/.shub/shub-logo.sh
 https://raw.githubusercontent.com/filipe1309/shubcogen-template/main/.shub/colors.sh
 https://raw.githubusercontent.com/filipe1309/shubcogen-template/main/.shub/helpers.sh
+https://raw.githubusercontent.com/filipe1309/shubcogen-template/main/.shub/resync.sh
 https://raw.githubusercontent.com/filipe1309/shubcogen-template/main/.shub/README.md
