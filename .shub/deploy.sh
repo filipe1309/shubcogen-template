@@ -9,6 +9,7 @@ source .shub/helpers.sh
 read_arguments $*
 
 VERSION=$(head -n 1 .shub/version)
+STATE="0"
 
 echo -e "${GREEN}"
 echo "#############################################"
