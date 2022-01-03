@@ -19,9 +19,9 @@ echo ""
 
 .shub/self-update.sh && exit 0
 
-if [ -f ".shub/.shub-state.ini" ]; then
-    source .shub/.shub-state.ini
-    source .shub/.shub-state-variables.ini
+if [ -f ".shub-state.ini" ]; then
+    source .shub-state.ini
+    source .shub-state-variables.ini
     echo -e "${YELLOW}⚠️  State file founded!${NC}"
   
     read -r -p "Do you want to use state file at step $(echo -e $GREEN"$STATE"$NC) [$(echo -e $GREEN"Y"$NC)/n]? " response
@@ -236,7 +236,7 @@ if test $STATE -lt 6; then
     git checkout -b $GIT_BRANCH_NEXT_CLASS_LW
 fi
 
-if [ -f ".shub/.shub-state.ini" ]; then
+if [ -f ".shub-state.ini" ]; then
     flush_state
 fi
 

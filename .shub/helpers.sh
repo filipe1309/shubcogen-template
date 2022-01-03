@@ -32,7 +32,7 @@ confirm() {
     if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
         echo -e "${GREEN}Ok =)${NC}"
     else
-        if [ -f ".shub/.shub-state.ini" ]; then
+        if [ -f ".shub-state.ini" ]; then
             flush_state
         fi
         exit 0;
@@ -82,14 +82,14 @@ array_contains () {
 }
 
 save_state_var() {
-    echo "$1=\"$2\"" >> .shub/.shub-state-variables.ini
+    echo "$1=\"$2\"" >> .shub-state-variables.ini
 }
 
 commit_state() {
-    echo "STATE=\"$1\"" > .shub/.shub-state.ini
+    echo "STATE=\"$1\"" > .shub-state.ini
 }
 
 flush_state() {
-    rm .shub/.shub-state.ini
-    rm .shub/.shub-state-variables.ini
+    rm .shub-state.ini
+    rm .shub-state-variables.ini
 }
