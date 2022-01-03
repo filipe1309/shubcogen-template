@@ -3,6 +3,7 @@
 # DevOntheRun Self-Update Script
 
 source .shub/helpers.sh
+source .shub/colors.sh
 
 LOCAL_VERSION=$(head -n 1 .shub/version)
 
