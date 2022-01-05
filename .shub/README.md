@@ -112,6 +112,7 @@ For example, if your actual branch is `class-1`, after running this script, the 
 - [ ] Add tests (with [Bat](https://github.com/bats-core/bats-core))
 - [ ] Add a Dev mode
 - [ ] Fix `confirm` exit behaviour
+- [ ] Add offline mode
 
 ## 🔗 Useful links
 - https://gitignore.io
