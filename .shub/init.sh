@@ -158,7 +158,7 @@ JSON_TEMPLATE='{
         sed -i '' -e "s/{{ VERSION }}/$VERSION/g" README.md
 
 # Create version file
-curl -o .shub/latest-release.json --create-dirs https://api.github.com/repos/filipe1309/shubcogen-template/releases/latest 2>/dev/null
+curl -o .shub/latest-release.json --create-dirs https://api.github.com/repos/filipe1309/shubcogen-template/releases/latest -H 'Cache-Control: no-cache' 2>/dev/null
 LATEST_RELEASE="$(cat .shub/latest-release.json)"
 REMOTE_VERSION=$(parse_json "$LATEST_RELEASE" tag_name)
 rm .shub/latest-release.json
