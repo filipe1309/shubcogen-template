@@ -158,7 +158,7 @@ generateTag() {
                 read -r -p "Recreate tag [$(echo -e $GREEN"Y"$NC)/n]? " response
                 response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
                 if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
-                    generateTag()
+                    generateTag
                 fi
                 echo "Bye =)"
                 exit 0
