@@ -97,9 +97,11 @@ generateTag() {
             response="y"
         fi
         if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
+            echo ""
             echo -e "🏷  ${GREEN}Generating tag...${NC}"
+            echo ""
             echo "# TAG MESSAGE"
-            echo "# Example: \"$(git tag -n9 | head -n 1 | awk '{for(i=2;i<=NF;++i)printf $i FS}')\""
+            echo -e "# Example: ${GREEN}\"$(git tag -n9 | head -n 1 | awk '{for(i=2;i<=NF;++i)printf $i FS}')\"${NC}"
             TAG_MSG_PREFIX_SUGGESTION="$(tr '[:lower:]' '[:upper:]' <<< ${TAG_NAME:0:1})${TAG_NAME:1}"
             
             save_state_var "TAG_MSG_PREFIX_SUGGESTION" "$TAG_MSG_PREFIX_SUGGESTION"
@@ -116,7 +118,7 @@ generateTag() {
             fi
 
             if [ -z "$ALL" ] && [ -z "$MESSAGE" ]; then
-                echo "Type the tag message [${GREEN}$TAG_MSG${NC}]:"
+                echo -e "Type the tag message [${GREEN}$TAG_MSG${NC}]:"
                 read -e TAG_MSG_USR
             fi
             if [ ! -z "$MESSAGE"  -a "$MESSAGE" != " " ]; then
@@ -130,9 +132,11 @@ generateTag() {
                 TAG_NAME="${TAG_NAME}-${TAG_MSG_SLUG}"
                 TAG_MSG="$TAG_MSG_PREFIX - $TAG_MSG_USR"
             fi
-
+            
+            echo ""
             echo "---------------------------------------------"
-            echo -e "TAG: [NAME]= \"${GREEN}$TAG_NAME${NC}\" || [MSG]= \"${GREEN}$TAG_MSG${NC}\""
+            echo -e "[NAME]= \"${GREEN}$TAG_NAME${NC}\""
+            echo -e "[MSG]= \"${GREEN}$TAG_MSG${NC}\""
             echo "---------------------------------------------"
             
             save_state_var "TAG_NAME" "$TAG_NAME"
@@ -141,15 +145,21 @@ generateTag() {
             if [ -z "$ALL" ]; then
                 read -r -p "Are you sure [$(echo -e $GREEN"Y"$NC)/n]? " response
                 response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
+                echo ""
             else
                 response="y"
             fi
             
             if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
                 git tag -a $TAG_NAME -m "$TAG_MSG"                
-                echo -e "${GREEN}Tag created: $TAG_NAME${NC}"
-                echo "---------------------------------------------"
+                echo ""
+                echo -e "🏷  ${GREEN}Tag ($TAG_NAME) generated!${NC}"
             else
+                read -r -p "Recreate tag [$(echo -e $GREEN"Y"$NC)/n]? " response
+                response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
+                if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
+                    generateTag()
+                fi
                 echo "Bye =)"
                 exit 0
             fi
@@ -206,6 +216,7 @@ if test $STATE -lt 4; then
     if [ -z "$ALL" ]; then
         confirm "Deploy on \"$(echo -e $GREEN"$GIT_DEFAULT_BRANCH"$NC)\" branch [$(echo -e $GREEN"Y"$NC)/n]? "
     fi
+    echo ""
     echo "🚀 Deploying on \"$(echo -e $GREEN"$GIT_DEFAULT_BRANCH"$NC)\" branch"
     { git push origin $GIT_DEFAULT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } }
     commit_state "4"
@@ -213,10 +224,12 @@ fi
 
 # STEP 5 - DEPLOY TAG
 
+echo ""
 if test $STATE -lt 5; then
     if [ -z "$ALL" ]; then
         confirm "Deploy tag \"$(echo -e $GREEN"$TAG_NAME"$NC)\" [$(echo -e $GREEN"Y"$NC)/n]? "
     fi
+    echo ""
     { git push origin $GIT_DEFAULT_BRANCH --tags  || { echo -e "$FAILED_MSG" ; exit 1; } }
     commit_state "5"
     echo ""
@@ -233,6 +246,7 @@ if test $STATE -lt 6; then
     if [ -z "$ALL" ]; then
         confirm "Go to next \"$(echo -e $GREEN"$COURSE_TYPE"$NC)\" ($GIT_BRANCH_NEXT_CLASS_LW) [$(echo -e $GREEN"Y"$NC)/n]? " 
     fi
+    echo ""
     git checkout -b $GIT_BRANCH_NEXT_CLASS_LW
 fi
 
