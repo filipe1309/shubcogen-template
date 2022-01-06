@@ -187,22 +187,35 @@ if test $STATE -lt 1; then
     commit_state "1"
 fi
 
-# STEP 2 - CHECKOUT & MERGE
+# STEP 2 - CHECKOUT
 
 if test $STATE -lt 2; then
     echo "---------------------------------------------"
     echo ""
     if [ -z "$ALL" ]; then
-        confirm "Checkout to \"$(echo -e $GREEN"$GIT_DEFAULT_BRANCH"$NC)\" branch & Merge current branch ($GIT_BRANCH) [$(echo -e $GREEN"Y"$NC)/n]? "
+        confirm "Checkout to \"$(echo -e $GREEN"$GIT_DEFAULT_BRANCH"$NC)\" branch [$(echo -e $GREEN"Y"$NC)/n]? "
     fi
     { git checkout $GIT_DEFAULT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } } && { git merge $GIT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } }
     commit_state "2"
     echo ""
 fi
 
-# STEP 3 - TAG
+# STEP 3 - MERGE
 
 if test $STATE -lt 3; then
+    echo "---------------------------------------------"
+    echo ""
+    if [ -z "$ALL" ]; then
+        confirm "Merge current branch ($GIT_BRANCH) [$(echo -e $GREEN"Y"$NC)/n]? "
+    fi
+    { git checkout $GIT_DEFAULT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } } && { git merge $GIT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } }
+    commit_state "2"
+    echo ""
+fi
+
+# STEP 4 - TAG
+
+if test $STATE -lt 4; then
     echo "---------------------------------------------"
     echo ""
     generateTag
@@ -210,9 +223,9 @@ if test $STATE -lt 3; then
     echo ""
 fi
 
-# STEP 4 - DEPLOY BRANCH
+# STEP 5 - DEPLOY BRANCH
 
-if test $STATE -lt 4; then
+if test $STATE -lt 5; then
     if [ -z "$ALL" ]; then
         confirm "Deploy on \"$(echo -e $GREEN"$GIT_DEFAULT_BRANCH"$NC)\" branch [$(echo -e $GREEN"Y"$NC)/n]? "
     fi
@@ -222,10 +235,10 @@ if test $STATE -lt 4; then
     commit_state "4"
 fi
 
-# STEP 5 - DEPLOY TAG
+# STEP 6 - DEPLOY TAG
 
 echo ""
-if test $STATE -lt 5; then
+if test $STATE -lt 6; then
     if [ -z "$ALL" ]; then
         confirm "Deploy tag \"$(echo -e $GREEN"$TAG_NAME"$NC)\" [$(echo -e $GREEN"Y"$NC)/n]? "
     fi
@@ -240,9 +253,9 @@ if test $STATE -lt 5; then
     echo ""
 fi
 
-# STEP 6 - NEXT
+# STEP 7 - NEXT
 
-if test $STATE -lt 6; then
+if test $STATE -lt 7; then
     if [ -z "$ALL" ]; then
         confirm "Go to next \"$(echo -e $GREEN"$COURSE_TYPE"$NC)\" ($GIT_BRANCH_NEXT_CLASS_LW) [$(echo -e $GREEN"Y"$NC)/n]? " 
     fi
