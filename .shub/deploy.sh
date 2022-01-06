@@ -168,7 +168,7 @@ if test $STATE -lt 2; then
     if [ -z "$ALL" ]; then
         confirm "Checkout to \"$(echo -e $GREEN"$GIT_DEFAULT_BRANCH"$NC)\" branch [$(echo -e $GREEN"Y"$NC)/n]? "
     fi
-    { git checkout $GIT_DEFAULT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } } && { git merge $GIT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } }
+    { git checkout $GIT_DEFAULT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } }
     commit_state "2"
     echo ""
 fi
@@ -181,8 +181,8 @@ if test $STATE -lt 3; then
     if [ -z "$ALL" ]; then
         confirm "Merge current branch ($GIT_BRANCH) [$(echo -e $GREEN"Y"$NC)/n]? "
     fi
-    { git checkout $GIT_DEFAULT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } } && { git merge $GIT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } }
-    commit_state "2"
+    { git merge $GIT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } }
+    commit_state "3"
     echo ""
 fi
 
@@ -192,7 +192,7 @@ if test $STATE -lt 4; then
     echo "---------------------------------------------"
     echo ""
     generateTag
-    commit_state "3"
+    commit_state "4"
     echo ""
 fi
 
@@ -205,7 +205,7 @@ if test $STATE -lt 5; then
     echo ""
     echo "🚀 Deploying on \"$(echo -e $GREEN"$GIT_DEFAULT_BRANCH"$NC)\" branch"
     { git push origin $GIT_DEFAULT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } }
-    commit_state "4"
+    commit_state "5"
 fi
 
 # STEP 6 - DEPLOY TAG
@@ -217,7 +217,7 @@ if test $STATE -lt 6; then
     fi
     echo ""
     { git push origin $GIT_DEFAULT_BRANCH --tags  || { echo -e "$FAILED_MSG" ; exit 1; } }
-    commit_state "5"
+    commit_state "6"
     echo ""
     echo -e "${GREEN}"
     echo "#############################################"
