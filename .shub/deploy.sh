@@ -5,6 +5,7 @@
 .shub/shub-logo.sh
 source .shub/colors.sh
 source .shub/helpers.sh
+source .shub/.shub-envs.sh
 
 read_arguments $*
 
@@ -36,40 +37,12 @@ fi
 
 
 if test $STATE -lt 1; then
-    # Init variables
-    JSON_CONFIG="$(cat shub-config.json)"
-    COURSE_TYPE=$(parse_json "$JSON_CONFIG" course_type)
-    ## Git variables
-    GIT_BRANCH=$(git branch --show-current)
-    GIT_DEFAULT_BRANCH=$(git remote show origin | grep 'HEAD' | cut -d':' -f2 | sed -e 's/^ *//g' -e 's/ *$//g')
-    [ $GIT_DEFAULT_BRANCH = "(unknown)" ] && GIT_DEFAULT_BRANCH="main"
-    FAILED_MSG="\u274c ERROR =/"
-    ## Course variables
-    IFS='-' read -ra ADDR <<< "$GIT_BRANCH"
-    CLASS_TYPE="${ADDR[0]}-"
-    if [[ ${ADDR[1]} == *"."* ]]; then
-        IFS='.' read -ra ADDR <<< "${ADDR[1]}"
-        CLASS_NUMBER="$CLASS_NUMBER ${ADDR[1]}"
-        CLASS_TYPE="${CLASS_TYPE}${ADDR[0]}."
-    fi
-    CLASS_NUMBER=${ADDR[1]}
-    ## Git variables based on course variables
-    GIT_BRANCH_NEXT_CLASS=$CLASS_TYPE$(($CLASS_NUMBER + 1))
-    GIT_BRANCH_NEXT_CLASS_LW=$(echo "$GIT_BRANCH_NEXT_CLASS" | tr '[:upper:]' '[:lower:]')  # tolower
-    GIT_BRANCH_NEXT_CLASS_UP=$(echo "$GIT_BRANCH_NEXT_CLASS" | tr '[:lower:]' '[:upper:]')  # toupper
-
     save_state_var "FAILED_MSG" "$FAILED_MSG"
     save_state_var "GIT_BRANCH" "$GIT_BRANCH"
     save_state_var "GIT_BRANCH_NEXT_CLASS" "$GIT_BRANCH_NEXT_CLASS"
     save_state_var "GIT_BRANCH_NEXT_CLASS_LW" "$GIT_BRANCH_NEXT_CLASS_LW"
     save_state_var "GIT_BRANCH_NEXT_CLASS_UP" "$GIT_BRANCH_NEXT_CLASS_UP"
 fi
-
-## Tag variables
-test -z "$TAG_NAME" && TAG_NAME=$GIT_BRANCH
-test -z "$TAG_MSG" && TAG_MSG="Auto generated tag message"
-test -z "$NEWEST_TAG" && NEWEST_TAG=$(git describe --abbrev=0 --tags)
-    
 
 echo -e "⬇ Branch to deploy: \"${GREEN}$GIT_BRANCH${NC}\""
 

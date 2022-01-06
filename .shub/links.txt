@@ -1,3 +1,4 @@
+https://raw.githubusercontent.com/filipe1309/shubcogen-template/main/.shub/shub-envs.sh
 https://raw.githubusercontent.com/filipe1309/shubcogen-template/main/.shub/deploy.sh
 https://raw.githubusercontent.com/filipe1309/shubcogen-template/main/.shub/self-update.sh
 https://raw.githubusercontent.com/filipe1309/shubcogen-template/main/.shub/init.sh
