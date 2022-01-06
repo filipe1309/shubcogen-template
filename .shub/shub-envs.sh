@@ -2,6 +2,8 @@
 
 # DevOntheRun Envs Script
 
+VERSION=$(head -n 1 .shub/version)
+
 # Init variables
 JSON_CONFIG="$(cat shub-config.json)"
 COURSE_TYPE=$(parse_json "$JSON_CONFIG" course_type)
@@ -31,3 +33,13 @@ GIT_BRANCH_NEXT_CLASS_UP=$(echo "$GIT_BRANCH_NEXT_CLASS" | tr '[:lower:]' '[:upp
 TAG_NAME=$GIT_BRANCH
 TAG_MSG="Auto generated tag message"
 NEWEST_TAG=$(git describe --abbrev=0 --tags)
+
+## State variables
+STATE="0"
+STATE_STEP_SHUB_FILES_ID="1"
+STATE_STEP_CHECKOUT_ID="2"
+STATE_STEP_MERGE_ID="3"
+STATE_STEP_TAG_ID="4"
+STATE_STEP_DEPLOY_BRANCH_ID="5"
+STATE_STEP_DEPLOY_TAG_ID="6"
+STATE_STEP_NEXT_ID="7"
