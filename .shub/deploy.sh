@@ -41,7 +41,7 @@ if test $STATE -lt $STATE_STEP_SHUB_FILES_ID; then
     save_state_var "GIT_BRANCH_NEXT_CLASS_UP" "$GIT_BRANCH_NEXT_CLASS_UP"
 fi
 
-echo -e "⬇ Branch to deploy: \"${GREEN}$GIT_BRANCH${NC}\""
+echo -e "🔽 Branch to deploy: \"${GREEN}$GIT_BRANCH${NC}\""
 
 # Check if branch is master/main
 MAIN_BRANCHES=("master" "main")
@@ -50,7 +50,7 @@ if array_contains MAIN_BRANCHES "$GIT_BRANCH"; then
     confirm "$(echo -e $YELLOW"Are you sure you want to continue?"$NC) [$(echo -e $GREEN"Y"$NC)/n]? "
 fi
 
-echo -e "⏩ Next branch: \"${GREEN}$GIT_BRANCH_NEXT_CLASS_LW${NC}\""
+echo -e "⏩ Next branch:      \"${GREEN}$GIT_BRANCH_NEXT_CLASS_LW${NC}\""
 
 echo "---------------------------------------------"
 
@@ -160,6 +160,7 @@ if test $STATE -lt $STATE_STEP_SHUB_FILES_ID; then
         echo ""
     fi
     commit_state "$STATE_STEP_SHUB_FILES_ID"
+    clear
 fi
 
 # STEP 2 - CHECKOUT
@@ -174,7 +175,7 @@ if test $STATE -lt $STATE_STEP_CHECKOUT_ID; then
     fi
     { git checkout $GIT_DEFAULT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } }
     commit_state "$STATE_STEP_CHECKOUT_ID"
-    echo ""
+    clear
 fi
 
 # STEP 3 - MERGE
@@ -189,7 +190,7 @@ if test $STATE -lt $STATE_STEP_MERGE_ID; then
     fi
     { git merge $GIT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } }
     commit_state "$STATE_STEP_MERGE_ID"
-    echo ""
+    clear
 fi
 
 # STEP 4 - TAG
@@ -200,7 +201,7 @@ if test $STATE -lt $STATE_STEP_TAG_ID; then
     echo ""
     generateTag
     commit_state "$STATE_STEP_TAG_ID"
-    echo ""
+    clear
 fi
 
 # STEP 5 - DEPLOY BRANCH
@@ -216,6 +217,7 @@ if test $STATE -lt $STATE_STEP_DEPLOY_BRANCH_ID; then
     echo "🚀 Deploying on \"$(echo -e $GREEN"$GIT_DEFAULT_BRANCH"$NC)\" branch"
     { git push origin $GIT_DEFAULT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } }
     commit_state "$STATE_STEP_DEPLOY_BRANCH_ID"
+    clear
 fi
 
 # STEP 6 - DEPLOY TAG
@@ -226,10 +228,11 @@ if test $STATE -lt $STATE_STEP_DEPLOY_TAG_ID; then
     echo ""
     if [ -z "$ALL" ]; then
         confirm "Deploy tag \"$(echo -e $GREEN"$TAG_NAME"$NC)\" [$(echo -e $GREEN"Y"$NC)/n]? "
-        echo ""
+        clear
     fi
     { git push origin $GIT_DEFAULT_BRANCH --tags  || { echo -e "$FAILED_MSG" ; exit 1; } }
     commit_state "$STATE_STEP_DEPLOY_TAG_ID"
+    clear
     echo ""
     echo -e "${GREEN}"
     echo "#############################################"
@@ -241,11 +244,15 @@ fi
 # STEP 7 - NEXT
 
 if test $STATE -lt $STATE_STEP_NEXT_ID; then
+    echo ""
+    echo -e "$GREEN# STEP $STATE_STEP_NEXT_ID/7 - NEXT$NC"
+    echo ""
     if [ -z "$ALL" ]; then
         confirm "Go to next \"$(echo -e $GREEN"$COURSE_TYPE"$NC)\" ($GIT_BRANCH_NEXT_CLASS_LW) [$(echo -e $GREEN"Y"$NC)/n]? " 
     fi
     echo ""
     git checkout -b $GIT_BRANCH_NEXT_CLASS_LW
+    clear
 fi
 
 if [ -f ".shub-state.ini" ]; then
