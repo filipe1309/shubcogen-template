@@ -105,6 +105,8 @@ generateTag() {
             
             echo ""
             echo "---------------------------------------------"
+            echo "                     TAG                     "
+            echo "---------------------------------------------"
             echo -e "[NAME]= \"${GREEN}$TAG_NAME${NC}\""
             echo -e "[MSG]= \"${GREEN}$TAG_MSG${NC}\""
             echo "---------------------------------------------"
@@ -147,12 +149,15 @@ generateTag() {
 
 if test $STATE -lt $STATE_STEP_SHUB_FILES_ID; then
     echo ""
+    echo -e "$GREEN# STEP $STATE_STEP_SHUB_FILES_ID/7 - SHUB FILES$NC"
+    echo ""
     echo "🏁 Starting deploy process ..."
     echo "✔ Auto commiting notes ..."
     git add notes.md && git commit -m "docs: update notes"
     if ( ! test -f ".gitignore" ) || ( test -f ".gitignore" && ! grep -q .shub ".gitignore" ); then
         echo "✔ Auto commiting shub files ..."
         git add .shub && git commit -m "chore: update shub files"  
+        echo ""
     fi
     commit_state "$STATE_STEP_SHUB_FILES_ID"
 fi
@@ -160,10 +165,12 @@ fi
 # STEP 2 - CHECKOUT
 
 if test $STATE -lt $STATE_STEP_CHECKOUT_ID; then
-    echo "---------------------------------------------"
+    echo ""
+    echo -e "$GREEN# STEP $STATE_STEP_CHECKOUT_ID/7 - CHECKOUT$NC"
     echo ""
     if [ -z "$ALL" ]; then
         confirm "Checkout to \"$(echo -e $GREEN"$GIT_DEFAULT_BRANCH"$NC)\" branch [$(echo -e $GREEN"Y"$NC)/n]? "
+        echo ""
     fi
     { git checkout $GIT_DEFAULT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } }
     commit_state "$STATE_STEP_CHECKOUT_ID"
@@ -173,10 +180,12 @@ fi
 # STEP 3 - MERGE
 
 if test $STATE -lt $STATE_STEP_MERGE_ID; then
-    echo "---------------------------------------------"
+    echo ""
+    echo -e "$GREEN# STEP $STATE_STEP_MERGE_ID/7 - MERGE$NC"
     echo ""
     if [ -z "$ALL" ]; then
         confirm "Merge current branch ($GIT_BRANCH) [$(echo -e $GREEN"Y"$NC)/n]? "
+        echo ""
     fi
     { git merge $GIT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } }
     commit_state "$STATE_STEP_MERGE_ID"
@@ -186,7 +195,8 @@ fi
 # STEP 4 - TAG
 
 if test $STATE -lt $STATE_STEP_TAG_ID; then
-    echo "---------------------------------------------"
+    echo ""
+    echo -e "$GREEN# STEP $STATE_STEP_TAG_ID/7 - TAG$NC"
     echo ""
     generateTag
     commit_state "$STATE_STEP_TAG_ID"
@@ -196,10 +206,13 @@ fi
 # STEP 5 - DEPLOY BRANCH
 
 if test $STATE -lt $STATE_STEP_DEPLOY_BRANCH_ID; then
+    echo ""
+    echo -e "$GREEN# STEP $STATE_STEP_DEPLOY_BRANCH_ID/7 - DEPLOY BRANCH$NC"
+    echo ""
     if [ -z "$ALL" ]; then
         confirm "Deploy on \"$(echo -e $GREEN"$GIT_DEFAULT_BRANCH"$NC)\" branch [$(echo -e $GREEN"Y"$NC)/n]? "
+        echo ""
     fi
-    echo ""
     echo "🚀 Deploying on \"$(echo -e $GREEN"$GIT_DEFAULT_BRANCH"$NC)\" branch"
     { git push origin $GIT_DEFAULT_BRANCH  || { echo -e "$FAILED_MSG" ; exit 1; } }
     commit_state "$STATE_STEP_DEPLOY_BRANCH_ID"
@@ -207,12 +220,14 @@ fi
 
 # STEP 6 - DEPLOY TAG
 
-echo ""
 if test $STATE -lt $STATE_STEP_DEPLOY_TAG_ID; then
+    echo ""
+    echo -e "$GREEN# STEP $STATE_STEP_DEPLOY_TAG_ID/7 - DEPLOY TAG$NC"
+    echo ""
     if [ -z "$ALL" ]; then
         confirm "Deploy tag \"$(echo -e $GREEN"$TAG_NAME"$NC)\" [$(echo -e $GREEN"Y"$NC)/n]? "
+        echo ""
     fi
-    echo ""
     { git push origin $GIT_DEFAULT_BRANCH --tags  || { echo -e "$FAILED_MSG" ; exit 1; } }
     commit_state "$STATE_STEP_DEPLOY_TAG_ID"
     echo ""
