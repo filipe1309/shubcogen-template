@@ -263,3 +263,9 @@ fi
 echo ""
 echo "## $GIT_BRANCH_NEXT_CLASS_UP" >> notes.md
 echo "" >> notes.md
+
+echo -e "$GREEN"
+echo -e "Deploy script finished!"
+echo -e "Thank you =)"
+echo -e "$NC"
+
