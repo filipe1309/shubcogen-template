@@ -1,1 +1,1 @@
-.shub/bin/deploy.sh
+.shub/deploy.sh
