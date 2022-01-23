@@ -27,11 +27,18 @@ if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
 
     VERSION=$(head -n 1 .shub/version)
 
+    is_in_git_repo() {
+        if [ -d .git ]; then
+            return 0
+        else
+            return 1
+        fi
+    }
+
     read_values() {
-        if git rev-parse --git-dir > /dev/null 2>&1; then
+        if is_in_git_repo; then
             PROJECT_REPO_LINK=$(git config --get remote.origin.url)
             PROJECT_REPO_NAME=$(basename `git rev-parse --show-toplevel`)
-            GIT_BRANCH=$(git branch --show-current)
             GIT_USERNAME=$(git config user.name)
 
             function extractUserFromGitHubLInk () {
@@ -179,9 +186,8 @@ EOF
     if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
         echo -e "${GREEN}OK =)${NC}"
 
-        # Auto init first new branch based on course type
-        if git rev-parse --git-dir > /dev/null 2>&1; then
-            [[ $COURSE_MULTIPLE = 'true' ]] && FIRST_BRANCH_NAME="${COURSE_TYPE}-1.1" || FIRST_BRANCH_NAME="${COURSE_TYPE}-1"
+    # Auto init first new branch based on course type
+    if is_in_git_repo; then
             read -r -p "Checkout to new branch ($(echo -e $GREEN"$FIRST_BRANCH_NAME"$NC)) [$(echo -e $GREEN"Y"$NC)/n]? " response
             response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
             if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
