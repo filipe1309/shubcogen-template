@@ -158,15 +158,22 @@ JSON_TEMPLATE='{
     response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
     if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
         # Update template
-        sed -i '' -e "s/{{ PROJECT_NAME }}/$PROJECT_NAME/g" README.md
-        sed -i '' -e "s/{{ COURSE_SOURCE }}/$COURSE_SOURCE/g" README.md
-        sed -i '' -e "s/{{ COURSE_NAME }}/$COURSE_NAME/g" README.md
-        sed -i '' -e "s,{{ COURSE_LINK }},$COURSE_LINK,g" README.md
-        sed -i '' -e "s,{{ COURSE_TYPE }},$COURSE_TYPE,g" README.md
-        sed -i '' -e "s/{{ PROJECT_REPO_NAME }}/$PROJECT_REPO_NAME/g" README.md
-        sed -i '' -e "s/{{ GITHUB_USER }}/$GITHUB_USER/g" README.md
-        sed -i '' -e "s/{{ GIT_USERNAME }}/$GIT_USERNAME/g" README.md
-        sed -i '' -e "s/{{ VERSION }}/$VERSION/g" README.md
+        
+        # To support sed from both MacOS and Linux distros
+        SEDOPTION=
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+            SEDOPTION="''"
+        fi
+
+        sed -i $SEDOPTION -e "s/{{ PROJECT_NAME }}/$PROJECT_NAME/g" README.md
+        sed -i $SEDOPTION -e "s/{{ COURSE_SOURCE }}/$COURSE_SOURCE/g" README.md
+        sed -i $SEDOPTION -e "s/{{ COURSE_NAME }}/$COURSE_NAME/g" README.md
+        sed -i $SEDOPTION -e "s,{{ COURSE_LINK }},$COURSE_LINK,g" README.md
+        sed -i $SEDOPTION -e "s,{{ COURSE_TYPE }},$COURSE_TYPE,g" README.md
+        sed -i $SEDOPTION -e "s/{{ PROJECT_REPO_NAME }}/$PROJECT_REPO_NAME/g" README.md
+        sed -i $SEDOPTION -e "s/{{ GITHUB_USER }}/$GITHUB_USER/g" README.md
+        sed -i $SEDOPTION -e "s/{{ GIT_USERNAME }}/$GIT_USERNAME/g" README.md
+        sed -i $SEDOPTION -e "s/{{ VERSION }}/$VERSION/g" README.md
 
 # Create version file
 curl -o .shub/latest-release.json --create-dirs https://api.github.com/repos/filipe1309/shubcogen-template/releases/latest -H 'Cache-Control: no-cache' 2>/dev/null
