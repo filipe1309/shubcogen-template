@@ -8,6 +8,10 @@ exec 0< /dev/tty
 source .shub/colors.sh   
 source .shub/helpers.sh
 
+
+# Remove Run info from README.md
+sed -i.bak '/SHUBCONFIG/d' ./README.md
+
 echo "---------------------------------------------"
 
 read -r -p "Configure template [$(echo -e $GREEN"Y"$NC)/n]? " response
