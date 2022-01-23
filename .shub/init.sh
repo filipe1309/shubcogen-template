@@ -191,6 +191,11 @@ EOF
     response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
     if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
         echo -e "${GREEN}OK =)${NC}"
+    else
+        # Remove shub scripts
+        rm -rf .shub
+        rm deploy.sh
+    fi
 
     # Auto init first new branch based on course type
     if is_in_git_repo; then
@@ -206,10 +211,6 @@ EOF
                 echo "" >> notes.md
             fi
         fi
-    else
-        # Remove shub scripts
-        rm -rf .shub
-        rm deploy.sh
     fi
 
     echo "---------------------------------------------"
@@ -219,7 +220,9 @@ EOF
     echo "---------------------------------------------"
 
     # Always remove init script
-    rm init.sh
+    if [ -f init.sh ]; then
+        rm init.sh
+    fi
 else
     exit 0;
 fi
