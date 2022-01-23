@@ -63,7 +63,6 @@ if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
         else
             PROJECT_REPO_LINK="{{ REPLACE_WITH_YOUR_REPO_LINK }}"
             PROJECT_REPO_NAME="{{ REPLACE_WITH_YOUR_REPO_NAME }}"
-            GIT_BRANCH=""
             GIT_USERNAME="{{ REPLACE_WITH_YOUR_NAME }}"
         fi
 
@@ -195,6 +194,9 @@ EOF
 
     # Auto init first new branch based on course type
     if is_in_git_repo; then
+        GIT_BRANCH=$(git branch --show-current)
+        [[ $COURSE_MULTIPLE = 'true' ]] && FIRST_BRANCH_NAME="${COURSE_TYPE}-1.1" || FIRST_BRANCH_NAME="${COURSE_TYPE}-1"
+        if [ $GIT_BRANCH != $FIRST_BRANCH_NAME ]; then
             read -r -p "Checkout to new branch ($(echo -e $GREEN"$FIRST_BRANCH_NAME"$NC)) [$(echo -e $GREEN"Y"$NC)/n]? " response
             response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
             if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
