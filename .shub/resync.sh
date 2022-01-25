@@ -37,10 +37,12 @@ if [[ $NUM =~ ^[0-9]+$ ]] && [ "$GIT_BRANCH_FROM_TAG" != "$GIT_BRANCH" ]; then
         echo "## $GIT_BRANCH_NEXT_CLASS_UP" >> notes.md
         echo "" >> notes.md
 
-        read -r -p "Do you want to delete last branch \"$(echo -e $GREEN"$GIT_BRANCH"$NC)\" [$(echo -e $GREEN"Y"$NC)/n]? " response
-        response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
-        if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
-          git branch -d $GIT_BRANCH
+        if [ "$GIT_BRANCH" != "$GIT_DEFAULT_BRANCH" ]; then
+          read -r -p "Do you want to delete last branch \"$(echo -e $GREEN"$GIT_BRANCH"$NC)\" [$(echo -e $GREEN"Y"$NC)/n]? " response
+          response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
+          if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
+            git branch -d $GIT_BRANCH
+          fi
         fi
     fi
 else
