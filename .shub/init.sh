@@ -195,6 +195,7 @@ EOF
         # Remove shub scripts
         rm -rf .shub
         rm deploy.sh
+        rm .editorconfig
     fi
 
     # Auto init first new branch based on course type
