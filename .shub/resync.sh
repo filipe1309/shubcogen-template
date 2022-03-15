@@ -29,8 +29,16 @@ if [[ $NUM =~ ^[0-9]+$ ]] && [ "$GIT_BRANCH_FROM_TAG" != "$GIT_BRANCH" ]; then
     read -r -p "Do you want to use it to set your branch as \"$(echo -e $GREEN"$CLASS_TYPE_DETECTED-$NUM"$NC)\" [$(echo -e $GREEN"Y"$NC)/n]? " response
     response=$(echo "$response" | tr '[:upper:]' '[:lower:]') # tolower
     if [[ $response =~ ^(yes|y| ) ]] || [[ -z $response ]]; then
+        if git status | grep notes.md; then
+          git add notes.md && git commit -m "docs: update notes"
+        fi
         git checkout $GIT_DEFAULT_BRANCH
         git pull origin $GIT_DEFAULT_BRANCH
+        if [ $? -ne 0 ]; then
+          echo -e "${RED}❌ Pull \"$GIT_DEFAULT_BRANCH\" fails!${NC}"
+          git checkout $GIT_BRANCH
+          exit 1
+        fi
         git checkout -b $GIT_BRANCH_FROM_NEXT_TAG
         echo -e "${GREEN}✅  Branch set to \"$GIT_BRANCH_FROM_NEXT_TAG\"${NC}"
         GIT_BRANCH_NEXT_CLASS_UP=$(echo "$GIT_BRANCH_FROM_NEXT_TAG" | tr '[:lower:]' '[:upper:]')  # toupper
