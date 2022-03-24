@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# DevOntheRun Helpers Script
+# Devdotrun Helpers Script
 
 parse_json() {
     echo $1 | \

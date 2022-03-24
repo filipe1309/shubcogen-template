@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# DevOntheRun INIT Project Script
+# Devdotrun INIT Project Script
 
 exec 0< /dev/tty
 

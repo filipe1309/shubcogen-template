@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# DevOntheRun Resync Script
+# Devdotrun Resync Script
 
 .shub/shub-logo.sh
 source .shub/colors.sh

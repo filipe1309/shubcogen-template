@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# DevOntheRun Deploy Script
+# Devdotrun Deploy Script
 
 .shub/shub-logo.sh
 source .shub/colors.sh
@@ -145,6 +145,8 @@ generateTag() {
 #### BRANCH #####
 #################
 
+echo "🟢 Starting deploy process ..."
+
 # STEP 1 - SHUB FILES
 
 if test $STATE -lt $STATE_STEP_SHUB_FILES_ID; then
@@ -249,13 +251,9 @@ if [ -f ".shub-state.ini" ]; then
     flush_state
 fi
 
-# Update notes file
-echo ""
-echo "## $GIT_BRANCH_NEXT_CLASS_UP" >> notes.md
-echo "" >> notes.md
-
-echo -e "$GREEN"
-echo -e "Deploy script finished!"
+echo -e "$BLACK $ON_GREEN"
+echo -e "🏁 Deploy script finished!"
+echo -e "$NC"
+echo -e "$DARK_GRAY"
 echo -e "Thank you =)"
 echo -e "$NC"
-

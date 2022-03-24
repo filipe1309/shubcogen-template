@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# DevOntheRun Self-Update Script
+# Devdotrun Self-Update Script
 
 source .shub/helpers.sh
 source .shub/colors.sh

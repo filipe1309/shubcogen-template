@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# DevOntheRun Envs Script
+# Devdotrun Envs Script
 
 VERSION=$(head -n 1 .shub/version)
 
