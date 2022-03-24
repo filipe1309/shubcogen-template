@@ -8,6 +8,9 @@
 
 This is a `template` with some scripts to `automate` `deploy` and the `initial setup` of a new **Co**urse that will be hosted on **Git**Hub.
 
+![](shub-cli.png)
+
+
 ## 📜 Requirements
 - [Git](https://git-scm.com/)
 - [Curl](https://curl.haxx.se/)
@@ -74,11 +77,13 @@ So you must be in a branch with a number at the end, like `class-1` or `class-1.
 
 For example, if your actual branch is `class-1`, after running this script, the steps below will be performed:
 
-1. A new tag `class-1-some-description` will be created
-2. The actual branch will be automatically merged into `main`
-3. The `main` branch will be sent to GitHub with the new tag (with `git push && git push --tags`)
-4. A new branch `class-2` will be created
-5. `notes.md` will be update with the new "project version number" like `## CLASS-2`
+1. Shub files will be commit automatically & notes.md` will be update with the new "project version number" like `## CLASS-2`
+2. Checkout to `main` branch
+3. branch `class-1` will be automatically merged into `main`
+4. A new tag `class-1-some-description` will be created
+5. The `main` branch will be sent to GitHub with the new tag (with `git push --follow-tags`)
+6. A new branch `class-2` will be created
+
 
 #### 🤷‍♂️ Optional arguments
 

@@ -1,6 +1,7 @@
 # <!-- SHUBCONFIG --> Hi 😊, welcome to ShubCoGen Template!
 ## <!-- SHUBCONFIG --> 🏃‍♂️ Run `./init.sh` to configure your project.
 ## <!-- SHUBCONFIG --> 👉 Access the docs [here](./.shub/README.md)
+## <!-- SHUBCONFIG --> ![](.shub/shub-cli.png)
 ## <!-- SHUBCONFIG --> <hr>
 
 # <p align="center">{{ PROJECT_NAME }}</p>
