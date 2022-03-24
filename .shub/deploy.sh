@@ -151,8 +151,13 @@ if test $STATE -lt $STATE_STEP_SHUB_FILES_ID; then
     echo ""
     echo -e "$GREEN# STEP $STATE_STEP_SHUB_FILES_ID/$STATE_STEPS - SHUB FILES$NC"
     echo ""
-    echo "🏁 Starting deploy process ..."
     echo "✔ Auto commiting notes ..."
+    
+    # Update notes file
+    echo ""
+    echo "## $GIT_BRANCH_NEXT_CLASS_UP" >> notes.md
+    echo "" >> notes.md
+
     git add notes.md && git commit -m "docs: update notes"
     if ( ! test -f ".gitignore" ) || ( test -f ".gitignore" && ! grep -q .shub ".gitignore" ); then
         echo "✔ Auto commiting shub files ..."
