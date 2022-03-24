@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Devdotrun Deploy Script
+# DevDotRun Deploy Script
 
 .shub/shub-logo.sh
 source .shub/colors.sh
@@ -11,7 +11,7 @@ read_arguments $*
 
 echo -e "${GREEN}"
 echo "#############################################"
-echo "               DOTR DEPLOY $VERSION                   "
+echo "               DevDotRun DEPLOY $VERSION                   "
 echo -e "#############################################${NC}"
 echo ""
 
