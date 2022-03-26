@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# DevDotRun Envs Script
+# Shub Envs Script
 
 VERSION=$(head -n 1 .shub/version)
 

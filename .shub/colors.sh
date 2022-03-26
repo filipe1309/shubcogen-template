@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# DevDotRun Colors Script
+# Shub Colors Script
 
 # BLACK        0;30     Dark Gray     1;30
 # RED          0;31     Light RED     1;31
