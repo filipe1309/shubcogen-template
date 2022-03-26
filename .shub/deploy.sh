@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# DevDotRun Deploy Script
+# Shub Deploy Script
 
 .shub/shub-logo.sh
 source .shub/colors.sh
@@ -11,7 +11,7 @@ read_arguments $*
 
 echo -e "${GREEN}"
 echo "#############################################"
-echo "               DevDotRun DEPLOY $VERSION                   "
+echo "               Shub DEPLOY $VERSION                   "
 echo -e "#############################################${NC}"
 echo ""
 
@@ -144,6 +144,10 @@ generateTag() {
 #################
 #### BRANCH #####
 #################
+
+sleep 1
+
+clear
 
 echo "🟢 Starting deploy process ..."
 
