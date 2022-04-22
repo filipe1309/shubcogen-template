@@ -164,10 +164,10 @@ if test $STATE -lt $STATE_STEP_SHUB_FILES_ID; then
     echo "## $GIT_BRANCH_NEXT_CLASS_UP" >> notes.md
     echo "" >> notes.md
 
-    git add notes.md && git commit -m "docs: update notes"
+    git add notes.md && git commit -m "docs: update notes" --no-verify
     if ( ! test -f ".gitignore" ) || ( test -f ".gitignore" && ! grep -q .shub ".gitignore" ); then
         echo "✔ Auto commiting shub files ..."
-        git add .shub && git commit -m "chore: update shub files"  
+        git add .shub && git commit -m "chore: update shub files" --no-verify
         echo ""
     fi
     commit_state "$STATE_STEP_SHUB_FILES_ID"
@@ -226,7 +226,7 @@ if test $STATE -lt $STATE_STEP_DEPLOY_BRANCH_ID; then
         echo ""
     fi
     echo "🚀 Deploying on \"$(echo -e $GREEN"$GIT_DEFAULT_BRANCH"$NC)\" branch"
-    { git push origin $GIT_DEFAULT_BRANCH --follow-tags  || { echo -e "$FAILED_MSG" ; exit 1; } }
+    { git push origin $GIT_DEFAULT_BRANCH --follow-tags --no-verify || { echo -e "$FAILED_MSG" ; exit 1; } }
     commit_state "$STATE_STEP_DEPLOY_BRANCH_ID"
     clear
     echo ""
