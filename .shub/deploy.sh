@@ -87,7 +87,7 @@ generateTag() {
                 TAG_MSG_PREFIX=$TAG_MSG_PREFIX_SUGGESTION
             fi
 
-            if [ -z "$ALL" ] && [ -z "$MESSAGE" ]; then
+            if [ -z "$MESSAGE" ]; then
                 echo -e "Type the tag message [${GREEN}$TAG_MSG${NC}]:"
                 read -e TAG_MSG_USR
             fi
