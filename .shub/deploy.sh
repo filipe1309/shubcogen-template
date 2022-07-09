@@ -71,7 +71,7 @@ generateTag() {
             echo -e "🏷  ${GREEN}Generating tag...${NC}"
             echo ""
             echo "# TAG MESSAGE"
-            echo -e "# Example: ${GREEN}\"$(git tag -n9 | head -n 1 | awk '{for(i=2;i<=NF;++i)printf $i FS}')\"${NC}"
+            echo -e "# Example: ${GREEN}\"$(git tag -n9 | head -n 1 | awk '{for(i=2;i<=NF;++i)printf $i FS}' | awk -F" - " '{print $2}')\"${NC}"
             TAG_MSG_PREFIX_SUGGESTION="$(tr '[:lower:]' '[:upper:]' <<< ${TAG_NAME:0:1})${TAG_NAME:1}"
             
             save_state_var "TAG_MSG_PREFIX_SUGGESTION" "$TAG_MSG_PREFIX_SUGGESTION"
