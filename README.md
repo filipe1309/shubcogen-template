@@ -56,7 +56,7 @@ cd {{ PROJECT_REPO_NAME }}
 ## :runner: Running
 
 ```sh
-docker-compose up
+make run
 ```
 
 > Access http://localhost
@@ -96,4 +96,3 @@ Please make sure to update tests as appropriate. -->
 ---
 
 > @ Generated with [ShubcoGen Template™](https://github.com/filipe1309/shubcogen-template) {{ VERSION }}  
-> ❓ [Docs](./.shub/README.md)
