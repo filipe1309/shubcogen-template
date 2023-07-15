@@ -1,5 +1,3 @@
-#! /bin/sh
-
 # run tests
 test:
 	@echo "🟢 Running tests..."
@@ -7,3 +5,9 @@ test:
 # run node
 run:
 	@echo "🏁 Running code..."
+
+help:
+	@echo "📖 Available commands:"
+	@echo "  make run"
+	@echo "  make test"
+	@echo "  make help"
