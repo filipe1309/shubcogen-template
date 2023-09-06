@@ -75,11 +75,11 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 Please make sure to update tests as appropriate. -->
 
-## License
+## :memo: License
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
-## About Me
+## 🧙‍♂️ About Me
 
 <p align="center">
     <a style="font-weight: bold" href="https://github.com/{{ GITHUB_USER }}/">
