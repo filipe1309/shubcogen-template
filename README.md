@@ -4,6 +4,8 @@
 ## <!-- SHUBCONFIG --> ![](.shub/shub-cli.png)
 ## <!-- SHUBCONFIG --> <hr>
 
+<a name="readme-top"></a>
+
 # <p align="center">{{ PROJECT_NAME }}</p>
 
 <p align="center">
@@ -38,10 +40,14 @@ This project was developed following {{ COURSE_SOURCE }}'s "[{{ COURSE_NAME }}](
 - [Docker Compose](https://docs.docker.com/compose/)
 - [Dockerize](https://github.com/jwilder/dockerize)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## :scroll: Requirements
 
 - [Docker](https://www.docker.com/)
 - [Docker Compose](https://docs.docker.com/compose/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## :cd: Installation
 
@@ -53,6 +59,8 @@ git clone git@github.com:{{ GITHUB_USER }}/{{ PROJECT_REPO_NAME }}.git
 cd {{ PROJECT_REPO_NAME }}
 ```
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## :runner: Running
 
 ```sh
@@ -60,6 +68,8 @@ make run
 ```
 
 > Access http://localhost
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ## :white_check_mark: Tests
 
@@ -79,6 +89,8 @@ Please make sure to update tests as appropriate. -->
 
 [MIT](https://choosealicense.com/licenses/mit/)
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## 🧙‍♂️ About Me
 
 <p align="center">
@@ -86,6 +98,8 @@ Please make sure to update tests as appropriate. -->
     <img style="border-radius:50%" width="100px; "src="https://github.com/{{ GITHUB_USER }}.png"/>
     </a>
 </p>
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
@@ -95,4 +109,10 @@ Please make sure to update tests as appropriate. -->
 
 ---
 
-> @ Generated with [ShubcoGen Template™](https://github.com/filipe1309/shubcogen-template) {{ VERSION }}  
+## :clap: Acknowledgments
+
+- [AlgoExpert](https://www.algoexpert.io/)
+- [ShubcoGen Template™](https://github.com/filipe1309/shubcogen-template)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
