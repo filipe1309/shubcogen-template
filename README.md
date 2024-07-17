@@ -104,7 +104,7 @@ Please make sure to update tests as appropriate. -->
 ---
 
 <p align="center">
-    Done with&nbsp;&nbsp;:heart:&nbsp;&nbsp;by <a style="font-weight: bold" href="https://github.com/{{ GITHUB_USER }}/">{{ GIT_USERNAME }}</a> 🖖
+    Done with&nbsp;&nbsp;♥️&nbsp;&nbsp;by <a style="font-weight: bold" href="https://github.com/{{ GITHUB_USER }}/">{{ GIT_USERNAME }}</a> 🖖
 </p>
 
 ---
