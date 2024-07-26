@@ -28,6 +28,8 @@
 
 This project was developed following {{ COURSE_SOURCE }}'s "[{{ COURSE_NAME }}]({{ COURSE_LINK }})" {{ COURSE_TYPE }}.
 
+Notes taken during the course are in the [notes](notes.md) file.
+
 ## :computer: Technologies
 
 - [PHP](https://www.php.net/)
