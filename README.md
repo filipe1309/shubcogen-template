@@ -103,6 +103,13 @@ Please make sure to update tests as appropriate. -->
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## :clap: Acknowledgments
+
+- [AlgoExpert](https://www.algoexpert.io/)
+- [ShubcoGen Template™](https://github.com/filipe1309/shubcogen-template)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ---
 
 <p align="center">
@@ -110,11 +117,4 @@ Please make sure to update tests as appropriate. -->
 </p>
 
 ---
-
-## :clap: Acknowledgments
-
-- [AlgoExpert](https://www.algoexpert.io/)
-- [ShubcoGen Template™](https://github.com/filipe1309/shubcogen-template)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
