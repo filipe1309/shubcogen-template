@@ -55,9 +55,9 @@ jobs:
           # Cleanup
           rm -rf \
             .github/template-cleanup \
-            .github/workflows/template-cleanup.yml \
+            .github/workflows/template-cleanup.yml
             # .github/workflows/template-verify.yml \
-            LICENSE
+            # LICENSE
 
       # Commit modified files
       - name: Commit files
