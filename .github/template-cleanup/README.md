@@ -20,7 +20,7 @@
 
 ## 💬 About
 
-This project was developed following {{ COURSE_SOURCE }}'s "[{{ COURSE_NAME }}]({{ COURSE_LINK }})" {{ COURSE_TYPE }}.
+This project was developed following ...
 
 Notes taken during the course are in the [notes](notes.md) file.
 
@@ -48,7 +48,7 @@ Notes taken during the course are in the [notes](notes.md) file.
 ## :cd: Installation
 
 ```sh
-git clone git@github.com:%GITHUB_USER%/%NAME%.git
+git clone https://github.com/%GITHUB_USER%/%NAME%.git
 ```
 
 ```sh
@@ -99,7 +99,6 @@ Please make sure to update tests as appropriate. -->
 
 ## :clap: Acknowledgments
 
-- [AlgoExpert](https://www.algoexpert.io/)
 - [ShubcoGen Template™](https://github.com/filipe1309/shubcogen-template)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -107,7 +106,7 @@ Please make sure to update tests as appropriate. -->
 ---
 
 <p align="center">
-    Done with&nbsp;&nbsp;♥️&nbsp;&nbsp;by <a style="font-weight: bold" href="https://github.com/%NAME%/">%GITHUB_USER%</a> 🖖
+    Done with&nbsp;&nbsp;♥️&nbsp;&nbsp;by <a style="font-weight: bold" href="https://github.com/%GITHUB_USER%/">%GITHUB_USER%</a> 🖖
 </p>
 
 ---
