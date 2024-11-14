@@ -1,6 +1,5 @@
 # <p align="center">ShubCoGen Template™ 💀</p>
 
-
 ## 💬 About
 
 **S**keleton Git**Hub** **Co**urse **Gen**erator.
@@ -17,7 +16,7 @@ When you create a new repository using this template, it triggers a GitHub Actio
 4. Wait for the GitHub Actions workflow to finish.
 5. Clone the repository.
 
-## :rocket: Features
+## 📦 Features
 
 - [x] GitHub Actions workflow to clean up the template files.
 - [x] README.md with sections and badges.

@@ -1,3 +1,5 @@
+.PHONY: test run help
+
 # run tests
 test:
 	@echo "🟢 Running tests..."
