@@ -20,9 +20,12 @@
 
 ## 💬 About
 
-This project was developed following ...
+The project is a ...
 
-Notes taken during the course are in the [notes](notes.md) file.
+> [!NOTE]
+> 1. This project was developed following ...'s "[Name](https://link.com)" course.  
+> 2. Notes taken during the course are in the [notes](notes.md) file.
+
 
 ## :computer: Technologies
 
