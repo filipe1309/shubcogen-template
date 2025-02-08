@@ -6,14 +6,14 @@
 
 This `template` is a simple way to create a new repository with a pre-defined structure and files.
 
-When you create a new repository using this template, it triggers a GitHub Actions workflow that will clone the repository, clean up the template files, and push the changes back to the repository.
+Creating a new repository using this template triggers a GitHub Actions workflow that will clone the repository, clean up the template files, and push the changes back to the repository.
 
 ## 🚀 Quick Start
 
-1. Click on `Use this template` button.
+1. Click on the `Use this template` button.
 2. Fill in the repository name and description.
 3. Click on `Create repository from template`.
-4. Wait for the GitHub Actions workflow to finish.
+4. :warning: Wait for the GitHub Actions workflow to finish.
 5. Clone the repository.
 
 ## 📦 Features
